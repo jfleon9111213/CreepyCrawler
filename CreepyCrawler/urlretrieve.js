@@ -3,6 +3,7 @@ $(document).ready(function() {
     chrome.tabs.getSelected(null, function (tab) {
         var link = document.createElement('a');
         link.href = tab.url;
-        $('#host').html("URL : " + link.href);
+        var request = $.ajax({ url: link.href, success: function(data) { alert(data); } });
+        $('#host').html("HTML : " + request);
     })
 });
