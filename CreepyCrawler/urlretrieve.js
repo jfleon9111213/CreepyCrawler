@@ -4,7 +4,7 @@ $(document).ready(function() {
         var link = document.createElement('a');
         link.href = tab.url;
         var request = $.ajax({ url: link.href, success: function(data) { alert(data); } });
-        $('#host').html("HTML : " + request);
+        //$('#host').html("HTML : " + request);
     })
     
     //sending HTML file to Key Phrase API call
