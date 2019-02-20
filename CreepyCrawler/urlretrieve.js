@@ -11,20 +11,20 @@ chrome.tabs.getSelected(null, function (tab) {
         var request = new ActiveXObject("Microsoft.XMLHTTP");
     }
     var words = "";
-    request.open("GET", "http://boilerpipe-web.appspot.com/extract?url=" + link.href, true);
+    request.open("GET", link.href, true);
     request.send();
 
     request.onreadystatechange = function () {
         if (request.readyState == 4) {
             document.open();
             document.write(request.responseText);
-            var list = document.getElementsByClassName("x-boilerpipe-mark1");
+            var list = document.getElementsByTagName("P");
             document.close();
             var i;
             for (i = 0; i < list.length; i++) {
                 words = words.concat(list[i].innerText + " ");
             }
-            //alert(words);
+            alert(words);
             getKeyPhrases(words);
         }
     };
@@ -46,7 +46,7 @@ function getKeyPhrases(articleText) {
             var wordList = response.substring(response.lastIndexOf("keyPhrases\":[") + 13, response.lastIndexOf("]}],\"errors"));
             wordList = wordList.replace(/\"/g, "");
             wordList = wordList.replace(/,/g, " ");
-            //alert(wordList);
+            alert(wordList);
             getSearchResults(wordList);
         }
     }  
