@@ -3,6 +3,7 @@
  * what is considered to be main text by the Boilerpipe algorithm.
  * Then retrieves the highlighted text
  */
+//extracting URL
 chrome.tabs.getSelected(null, function (tab) {
     var link = document.createElement('a');
     link.href = tab.url;
@@ -12,10 +13,12 @@ chrome.tabs.getSelected(null, function (tab) {
         var request = new ActiveXObject("Microsoft.XMLHTTP");
     }
     var words = "";
-    //alert(link.href);
+
+    //calling boilerpipe
     request.open("GET", "http://boilerpipe-web.appspot.com/extract?url=" + link.href, true);
     request.send();
 
+    //write boilerpipe response to document
     request.onreadystatechange = function () {
         if (request.readyState == 4) {
             document.open();
@@ -75,11 +78,17 @@ function getSearchResults(wordList) {
         if (searchRequest.readyState == 4) {
             //alert(searchRequest.responseText);
             var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
-            for (i = 0; i < urlList.length; i++) {
-                urlList[i] = urlList[i].replace(/\"url\": /, "");
-                urlList[i] = urlList[i].replace(/\"/g, "");
+            
+	    for (i = 0; i < urlList.length; i++) { 
+                urlList[i] = urlList[i].replace(/\"/g, "");	//delete all double quotes
+		urlList[i] = urlList[i].replace("url:", ""); //delete "url: " label
+		urlList[i] = urlList[i].replace(/\\\/|\/\\/g, "/");	//replace \/ with /
             }
-            alert(urlList + "::::" + urlList.length);
+	    //formatting URLs for printing
+	    var urlListString = urlList.toString().replace(/,/g, "\n\n");
+	    alert(urlList.length + " suggestions: \n" + urlListString);
+
         }
     }
 }
+
