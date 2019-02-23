@@ -1,10 +1,10 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"name": "CreepyCrawler Extension",
-	"version": "1.0",
-	"description": "Temp: This extension prints out the current URL",
+	"version": "2.0",
+	"description": "Temp: This extension suggests similar websites",
 	"browser_action": {
-		"default_icon": "defaulticon.png",
+		"default_icon": "icon1.png",
 		"default_popup": "window.html"
 	},
 	"permissions": ["tabs", "<all_urls>"]
