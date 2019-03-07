@@ -1,9 +1,15 @@
-/**
- * Gets the URL of a tab, then calls the Boilerpipe API to highlight
- * what is considered to be main text by the Boilerpipe algorithm.
- * Then retrieves the highlighted text
- */
+/*
+ * Gets all the text found in the body paragraphs of the current HTML file,
+ * sends that text to the KeyPhrases Azure API, and then gets
+ * relevant reults.
+ */ 
+
 chrome.tabs.getSelected(null, function (tab) {
+    chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
+        alert(response.data);
+        getKeyPhrases(response.data);
+    });
+    /*
     var link = document.createElement('a');
     link.href = tab.url;
     if (window.XMLHttpRequest) {
@@ -12,27 +18,25 @@ chrome.tabs.getSelected(null, function (tab) {
         var request = new ActiveXObject("Microsoft.XMLHTTP");
     }
     var words = "";
-    //alert(link.href);
-    request.open("GET", "http://boilerpipe-web.appspot.com/extract?url=" + link.href, true);
+    request.open("GET", link.href, true);
     request.send();
-
+    */
+    /*
     request.onreadystatechange = function () {
         if (request.readyState == 4) {
             document.open();
             document.write(request.responseText);
-            var list = document.getElementsByClassName("x-boilerpipe-mark1");
+            var list = document.getElementsByTagName("P");
             document.close();
+            var i;
             for (i = 0; i < list.length; i++) {
-                words = words.concat(list[i].innerText + " ");
+                words = words.concat(list[i].innerText + i + " ");
             }
-            //alert(words);
-            if (words.length > 5120) {
-                words = words.substring(0, 5119);
-            }
+            alert(words);
             getKeyPhrases(words);
         }
-    };
-})
+    };*/
+});
 
 /**
  * Gets the key phrases of an article by calling the Azure Key Phrases API.
@@ -58,7 +62,7 @@ function getKeyPhrases(articleText) {
             //alert(wordList);
             getSearchResults(wordList);
         }
-    }  
+    }
 }
 
 /**
@@ -75,11 +79,16 @@ function getSearchResults(wordList) {
         if (searchRequest.readyState == 4) {
             //alert(searchRequest.responseText);
             var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
+
             for (i = 0; i < urlList.length; i++) {
-                urlList[i] = urlList[i].replace(/\"url\": /, "");
-                urlList[i] = urlList[i].replace(/\"/g, "");
+                urlList[i] = urlList[i].replace(/\"/g, "");	//delete all double quotes
+                urlList[i] = urlList[i].replace("url:", ""); //delete "url: " label
+                urlList[i] = urlList[i].replace(/\\\/|\/\\/g, "/");	//replace \/ with /
             }
-            alert(urlList + "::::" + urlList.length);
+            //formatting URLs for printing
+            var urlListString = urlList.toString().replace(/,/g, "\n\n");
+            alert(urlList.length + " suggestions: \n" + urlListString);
+
         }
     }
 }
