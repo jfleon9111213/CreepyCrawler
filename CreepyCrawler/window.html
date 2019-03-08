@@ -52,21 +52,50 @@ will be printed out.
     <body>
 	<h1>Recommended Websites: </h1>
 
-    <div id="safeToggle">
-        <button id="safeToggle" type="button" value="Safe Search is off" onclick=function()
-            {
-                var elem = document.getElementById("safeToggle");
-                if (elem.value=="Safe Search is off") elem.value = "Safe Search is on";
-                else elem.value = "Safe Search is on";
-            }
-        >Toggle SafeSearch</button>
+    <div class="dropdown">
+        <input onclick="change()" type="button" class="dropbtn" value="Safe Search is off" id="safeToggle" />
+        <script>
+        function change() // no ';' here
+        {
+            var elem = document.getElementById("safeToggle");
+            if (elem.value=="Safe Search is off") elem.value = "Safe Search is on";
+            else elem.value = "Safe Search is off";
+        }
+        </script>
     </div>
+
     <div class="dropdown">
         <button onclick="dropdownFunction()" class="dropbtn">Language Preference</button>
         <div id="myDropdown" class="dropdown-content">
-            <a onclick='displayResult("en")'>Hide English Results</a>
-            <a onclick='displayResult("sp")'>Hide Spanish Results</a>
-            <a onclick='displayResult("de")'>Hide German Results</a>
+            <input type="button" id="langPref_en" onclick='displayResult("en")'value='Hide'> English Results</input>
+            <input type="button" id="langPref_sp" onclick='displayResult("sp")'value='Hide'> Spanish Results</input>
+            <input type="button" id="langPref_de" onclick='displayResult("de")'value='Hide'> German Results</input>
+
+            <script>
+            function displayResult(hiddenClass) {
+                //change button
+                var elem = document.getElementById("langPref_" + hiddenClass);
+                
+                if (elem.value=="Hide"){ 
+                    elem.value = "Show";
+                    //change links displayed
+                    var x = document.getElementsByClassName(hiddenClass);
+                    for (var i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";
+                    }
+                }
+                else{
+                    elem.value = "Hide";  
+                    //change links displayed
+                    var x = document.getElementsByClassName(hiddenClass);
+                    for (var i = 0; i < x.length; i++) {
+                        x[i].style.display = "block";
+                    }
+                } 
+
+                
+            }
+            </script>
         </div>
     </div>
 
@@ -93,17 +122,6 @@ will be printed out.
     }
     </script>
 
-    
-    <script>
-
-    function displayResult(hiddenClass) {
-
-        var x = document.getElementsByClassName(hiddenClass);
-        for (var i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-    }
-    </script>
 
     <!--List of URLs. By default, displays all languages-->
     <ul id="myUL" style="list-style-type:none;">
