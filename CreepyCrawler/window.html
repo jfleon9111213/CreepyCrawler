@@ -59,8 +59,8 @@ will be printed out.
                 if (elem.value=="Safe Search is off") elem.value = "Safe Search is on";
                 else elem.value = "Safe Search is on";
             }
-        >Toggle SafeSearch</input>
-
+        >Toggle SafeSearch</button>
+    </div>
     <div class="dropdown">
         <button onclick="dropdownFunction()" class="dropbtn">Language Preference</button>
         <div id="myDropdown" class="dropdown-content">
@@ -97,10 +97,11 @@ will be printed out.
     <script>
 
     function displayResult(hiddenClass) {
-      var x = document.getElementsByClassName(hiddenClass);
-      for (var i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
+
+        var x = document.getElementsByClassName(hiddenClass);
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
     }
     </script>
 
