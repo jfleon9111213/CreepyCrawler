@@ -48,7 +48,7 @@ function getKeyPhrases(articleText) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "51567aff9ae14b64b15f7540a32a54d9");
+    xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "7d859d1e1f8d46d6817308ac3da35494");
     xhr.send(myJSON);
 
     xhr.onreadystatechange = function () {
@@ -59,7 +59,7 @@ function getKeyPhrases(articleText) {
             wordList = wordList.replace(/\"/g, "");
             wordList = wordList.replace(/,/g, "+");
             wordList = wordList.replace(/ /g, "+");
-            //alert(wordList);
+            alert(wordList);
             getSearchResults(wordList);
         }
     }
@@ -72,12 +72,12 @@ function getKeyPhrases(articleText) {
 function getSearchResults(wordList) {
     var searchRequest = new XMLHttpRequest();
     searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList, true);
-    searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "721a6802f8dd4b648522b2dec70687d8");
+    searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
     searchRequest.send();
 
     searchRequest.onreadystatechange = function () {
         if (searchRequest.readyState == 4) {
-            //alert(searchRequest.responseText);
+            alert(searchRequest.responseText);
             var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
 
             for (i = 0; i < urlList.length; i++) {
