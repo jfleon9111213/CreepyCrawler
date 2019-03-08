@@ -1,22 +1,117 @@
 <!--
-This file sets up the window popup where the URL
+This file sets up the window popup where the URLs
 will be printed out.
 -->
 
 <!doctype html>
 <html>
     <head>
-        <title>This is a test</title>
+        <title>UX Tester</title>
         <style>
             body {
                 min-width: 357px;
                 overflow-x: hidden;
             }
+
+            .dropbtn {
+              border: none;
+              cursor: pointer;
+            }
+
+            .dropbtn:hover, .dropbtn:focus {
+              background-color: #2980B9;
+            }
+
+            .dropdown {
+              position: relative;
+              display: inline-block;
+            }
+
+            .dropdown-content {
+              display: none;
+              position: absolute;
+              background-color: #f1f1f1;
+              min-width: 160px;
+              overflow: auto;
+              box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+              z-index: 1;
+            }
+
+            .dropdown-content a {
+              color: black;
+              padding: 12px 16px;
+              text-decoration: none;
+              display: block;
+            }
+            .dropdown a:hover {background-color: #ddd;}
+
+            .show {display: block;}
         </style>
-            <script src="urlretrieve_dummy.js"></script>
+        
     </head>
     <body>
-        <div id="host"></div>
+	<h1>Recommended Websites: </h1>
+
+    <div id="safeToggle">
+        <button id="safeToggle" type="button" value="Safe Search is off" onclick=function()
+            {
+                var elem = document.getElementById("safeToggle");
+                if (elem.value=="Safe Search is off") elem.value = "Safe Search is on";
+                else elem.value = "Safe Search is on";
+            }
+        >Toggle SafeSearch</input>
+
+    <div class="dropdown">
+        <button onclick="dropdownFunction()" class="dropbtn">Language Preference</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a onclick='displayResult("en")'>Hide English Results</a>
+            <a onclick='displayResult("sp")'>Hide Spanish Results</a>
+            <a onclick='displayResult("de")'>Hide German Results</a>
+        </div>
+    </div>
+
+    <!-- Script handling language dropdown menu-->
+    <script> 
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function dropdownFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
+
+    
+    <script>
+
+    function displayResult(hiddenClass) {
+      var x = document.getElementsByClassName(hiddenClass);
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+    }
+    </script>
+
+    <!--List of URLs. By default, displays all languages-->
+    <ul id="myUL" style="list-style-type:none;">
+      <li><a class="en" href="https://www.washingtontimes.com/news/2019/mar/7/more-venezuela-sanctions-way-trump-envoy-elliott-a/" target="_blank">Link</a></li>
+      <li><a class="en" href="https://www.reuters.com/article/us-venezuela-politics/trumps-venezuela-envoy-vows-sanctions-on-banks-backing-maduro-idUSKCN1QO21F" target="_blank">Link</a></li>
+      <li><a class="sp" href="http://www.eluniversal.com/politica/35030/abrams-bancos-extranjeros-podrian-ser-penalizados-si-se-determina-que-estan-ayudando-a-nicolas-a" target="_blank">Link</a></li>
+      <li><a class="de" href="http://www.spiegel.de/politik/ausland/venezuela-usa-belegen-umfeld-von-nicolas-maduro-mit-sanktionen-a-1255938.html" target="_blank">Link</a></li>
+    </ul>
+
     </body>
 
 </html>
