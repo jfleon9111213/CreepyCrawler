@@ -5,46 +5,51 @@ will be printed out.
 
 <!doctype html>
 <html>
-    <head>
-        <title>UX Tester</title>
-        <link rel="stylesheet" type="text/css" href="windowstyle.css" />
-    </head>
-    <body>
-	<h1>Recommended Websites: </h1>
+  <head>
+      <title>UX Tester</title>
+      <link rel="stylesheet" type="text/css" href="windowstyle.css" />
+  </head>
 
-    <div class="dropdown">
-        <!-- Rounded switch -->
-        <label class="switch">SafeSearch
-        <input type="button" class="switch" value="Safe Search is off" id="safeToggle" />
-          <input type="checkbox">
-          <span class="slider round"></span>
-        </label>
-        
+  <body>
+	  <h3>Recommended Websites: </h3>
+
+    <button id="filterbtn">Filters</button>
+
+    <div id="filters" value="hidden">
+      <label>SafeSearch</label>
+      <div class="switch">
+          
+          <!-- Rounded switch -->
+          <label type="button" class="switch" value="Safe Search is off" id="safeToggle">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          
+      </div>
+
+      <div class="dropdown">
+          <button id="langDropdown" class="dropbtn">Language Preference</button>
+          <div id="myDropdown" class="dropdown-content">
+              <button type="button" class = "lang_button" id="langPref_en" value='Hide'> English Results</button>
+              <button type="button" class = "lang_button" id="langPref_sp" value='Hide'> Spanish Results</button>
+              <button type="button" class = "lang_button" id="langPref_de" value='Hide'> German Results</button>
+          </div>
+      </div>
     </div>
-
-    <div class="dropdown">
-        <button id="langDropdown" class="dropbtn">Language Preference</button>
-        <div id="myDropdown" class="dropdown-content">
-            <input type="button" class = "lang_button" id="langPref_en" value='Hide'> English Results</input>
-            <input type="button" class = "lang_button" id="langPref_sp" value='Hide'> Spanish Results</input>
-            <input type="button" class = "lang_button" id="langPref_de" value='Hide'> German Results</input>
-        </div>
-    </div>
-
     <!--List of URLs. By default, displays all languages-->
     <dl id="myUL" style="list-style-type:none;">
       <dt><a class="en" href="https://www.washingtontimes.com/news/2019/mar/7/more-venezuela-sanctions-way-trump-envoy-elliott-a/" target="_blank">EnLink</a></dt>
       <!--TODO: insert definitions as previews of the URLs--> 
-      <dd class="en">A link to an English article.</dd>
+      <dd class="en">Preview of article goes here.</dd>
       <dt><a class="en" href="https://www.reuters.com/article/us-venezuela-politics/trumps-venezuela-envoy-vows-sanctions-on-banks-backing-maduro-idUSKCN1QO21F" target="_blank">EnLink</a></dt>
       <!--TODO: insert definitions as previews of the URLs--> 
-      <dd></dd>
+      <dd>Preview of article goes here.</dd>
       <dt><a class="sp" href="http://www.eluniversal.com/politica/35030/abrams-bancos-extranjeros-podrian-ser-penalizados-si-se-determina-que-estan-ayudando-a-nicolas-a" target="_blank">SpLink</a></dt>
       <!--TODO: insert definitions as previews of the URLs--> 
-      <dd></dd>
+      <dd>Preview of article goes here.</dd>
       <dt><a class="de" href="http://www.spiegel.de/politik/ausland/venezuela-usa-belegen-umfeld-von-nicolas-maduro-mit-sanktionen-a-1255938.html" target="_blank">DeLink</a></dt>
       <!--TODO: insert definitions as previews of the URLs--> 
-      <dd></dd>
+      <dd>Preview of article goes here.</dd>
     </dl>
 
     <script src="urlretrieve_dummy.js"></script>

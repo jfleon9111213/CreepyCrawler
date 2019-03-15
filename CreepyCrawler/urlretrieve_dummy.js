@@ -3,6 +3,19 @@
  * Meant to emulate results of actual urlretrieve.js
 */
 
+var fb= document.getElementById("filterbtn");
+fb.addEventListener("click", function filterShow(){
+    var fltrs = document.getElementById("filters");
+    if(fltrs.value=="hidden"){
+        fltrs.style.display = "block";
+        fltrs.value = "shown";
+    }
+    else{
+        fltrs.style.display = "none";
+        fltrs.value = "hidden";
+    }
+});
+
 //SAFESEARCH TOGGLE
 var stb = document.getElementById("safeToggle");
 stb.addEventListener("click", buttonChange(stb));
@@ -45,12 +58,11 @@ for(var crnt_lsb = 0; crnt_lsb < lsb.length; crnt_lsb++){
 }
 */
 
-document.getElementbyId("langPref_en").addEventListener('click', displayResult("langPref_en"));
-document.getElementbyId("langPref_sp").addEventListener('click', displayResult("langPref_sp"));
-document.getElementbyId("langPref_de").addEventListener('click', displayResult("langPref_de"));
+document.getElementById("langPref_en").addEventListener("click", displayResult("langPref_en"));
+document.getElementById("langPref_sp").addEventListener("click", displayResult("langPref_sp"));
+document.getElementById("langPref_de").addEventListener("click", displayResult("langPref_de"));
 
 function displayResult(hiddenClass) {
-	alert("this is the language being hidden: " + hiddenClass);
     //change button
     var elem = document.getElementById(hiddenClass);
     var lang_list = document.getElementsByClassName(hiddenClass.substr(10, 11));
@@ -59,7 +71,6 @@ function displayResult(hiddenClass) {
 //TODO: current for loop might not be viable for addEventListener, i.e. it might be implementing it immediately
 //instead of on "click"
     if (elem.value=="Hide"){ 
-    	alert("changing a hide");
         elem.value = "Show";
         //change links displayed
         lang_action = "none";
