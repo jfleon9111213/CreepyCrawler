@@ -7,130 +7,47 @@ will be printed out.
 <html>
     <head>
         <title>UX Tester</title>
-        <style>
-            body {
-                min-width: 357px;
-                overflow-x: hidden;
-            }
-
-            .dropbtn {
-              border: none;
-              cursor: pointer;
-            }
-
-            .dropbtn:hover, .dropbtn:focus {
-              background-color: #2980B9;
-            }
-
-            .dropdown {
-              position: relative;
-              display: inline-block;
-            }
-
-            .dropdown-content {
-              display: none;
-              position: absolute;
-              background-color: #f1f1f1;
-              min-width: 160px;
-              overflow: auto;
-              box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-              z-index: 1;
-            }
-
-            .dropdown-content a {
-              color: black;
-              padding: 12px 16px;
-              text-decoration: none;
-              display: block;
-            }
-            .dropdown a:hover {background-color: #ddd;}
-
-            .show {display: block;}
-        </style>
-        
+        <link rel="stylesheet" type="text/css" href="windowstyle.css" />
     </head>
     <body>
 	<h1>Recommended Websites: </h1>
 
     <div class="dropdown">
-        <input onclick="change()" type="button" class="dropbtn" value="Safe Search is off" id="safeToggle" />
-        <script>
-        function change() // no ';' here
-        {
-            var elem = document.getElementById("safeToggle");
-            if (elem.value=="Safe Search is off") elem.value = "Safe Search is on";
-            else elem.value = "Safe Search is off";
-        }
-        </script>
+        <!-- Rounded switch -->
+        <label class="switch">SafeSearch
+        <input type="button" class="switch" value="Safe Search is off" id="safeToggle" />
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        
     </div>
 
     <div class="dropdown">
-        <button onclick="dropdownFunction()" class="dropbtn">Language Preference</button>
+        <button id="langDropdown" class="dropbtn">Language Preference</button>
         <div id="myDropdown" class="dropdown-content">
-            <input type="button" id="langPref_en" onclick='displayResult("en")'value='Hide'> English Results</input>
-            <input type="button" id="langPref_sp" onclick='displayResult("sp")'value='Hide'> Spanish Results</input>
-            <input type="button" id="langPref_de" onclick='displayResult("de")'value='Hide'> German Results</input>
-
-            <script>
-            function displayResult(hiddenClass) {
-                //change button
-                var elem = document.getElementById("langPref_" + hiddenClass);
-                
-                if (elem.value=="Hide"){ 
-                    elem.value = "Show";
-                    //change links displayed
-                    var x = document.getElementsByClassName(hiddenClass);
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].style.display = "none";
-                    }
-                }
-                else{
-                    elem.value = "Hide";  
-                    //change links displayed
-                    var x = document.getElementsByClassName(hiddenClass);
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].style.display = "block";
-                    }
-                } 
-
-                
-            }
-            </script>
+            <input type="button" class = "lang_button" id="langPref_en" value='Hide'> English Results</input>
+            <input type="button" class = "lang_button" id="langPref_sp" value='Hide'> Spanish Results</input>
+            <input type="button" class = "lang_button" id="langPref_de" value='Hide'> German Results</input>
         </div>
     </div>
 
-    <!-- Script handling language dropdown menu-->
-    <script> 
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function dropdownFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-    </script>
-
-
     <!--List of URLs. By default, displays all languages-->
-    <ul id="myUL" style="list-style-type:none;">
-      <li><a class="en" href="https://www.washingtontimes.com/news/2019/mar/7/more-venezuela-sanctions-way-trump-envoy-elliott-a/" target="_blank">Link</a></li>
-      <li><a class="en" href="https://www.reuters.com/article/us-venezuela-politics/trumps-venezuela-envoy-vows-sanctions-on-banks-backing-maduro-idUSKCN1QO21F" target="_blank">Link</a></li>
-      <li><a class="sp" href="http://www.eluniversal.com/politica/35030/abrams-bancos-extranjeros-podrian-ser-penalizados-si-se-determina-que-estan-ayudando-a-nicolas-a" target="_blank">Link</a></li>
-      <li><a class="de" href="http://www.spiegel.de/politik/ausland/venezuela-usa-belegen-umfeld-von-nicolas-maduro-mit-sanktionen-a-1255938.html" target="_blank">Link</a></li>
-    </ul>
+    <dl id="myUL" style="list-style-type:none;">
+      <dt><a class="en" href="https://www.washingtontimes.com/news/2019/mar/7/more-venezuela-sanctions-way-trump-envoy-elliott-a/" target="_blank">EnLink</a></dt>
+      <!--TODO: insert definitions as previews of the URLs--> 
+      <dd class="en">A link to an English article.</dd>
+      <dt><a class="en" href="https://www.reuters.com/article/us-venezuela-politics/trumps-venezuela-envoy-vows-sanctions-on-banks-backing-maduro-idUSKCN1QO21F" target="_blank">EnLink</a></dt>
+      <!--TODO: insert definitions as previews of the URLs--> 
+      <dd></dd>
+      <dt><a class="sp" href="http://www.eluniversal.com/politica/35030/abrams-bancos-extranjeros-podrian-ser-penalizados-si-se-determina-que-estan-ayudando-a-nicolas-a" target="_blank">SpLink</a></dt>
+      <!--TODO: insert definitions as previews of the URLs--> 
+      <dd></dd>
+      <dt><a class="de" href="http://www.spiegel.de/politik/ausland/venezuela-usa-belegen-umfeld-von-nicolas-maduro-mit-sanktionen-a-1255938.html" target="_blank">DeLink</a></dt>
+      <!--TODO: insert definitions as previews of the URLs--> 
+      <dd></dd>
+    </dl>
 
+    <script src="urlretrieve_dummy.js"></script>
     </body>
 
 </html>
