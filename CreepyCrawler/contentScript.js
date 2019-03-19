@@ -5,5 +5,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, response) {
     for (var i = 0; i < list.length; i++) {
         words = words.concat(list[i].innerText + i + " ");
     }
+    if (words.length > 5120) {
+        words = words.substring(0, 5119);
+    }
     response({ data: words });
 });

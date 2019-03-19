@@ -7,7 +7,9 @@
 chrome.tabs.getSelected(null, function (tab) {
     chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
         alert(response.data);
-        getKeyPhrases(response.data);
+        var mainText = response.data.split(" ");
+        alert(mainText[0]);
+        getKeyPhrases(response.data, mainText);
     });
     /*
     var link = document.createElement('a');
@@ -42,7 +44,7 @@ chrome.tabs.getSelected(null, function (tab) {
  * Gets the key phrases of an article by calling the Azure Key Phrases API.
  * Also cleans the response for URL calling.
  */
-function getKeyPhrases(articleText) {
+function getKeyPhrases(articleText, mainText) {
     var documents = { documents: [{ language: "en", id: "1", text: articleText }] };
     var myJSON = JSON.stringify(documents);
     var xhr = new XMLHttpRequest();
@@ -53,14 +55,83 @@ function getKeyPhrases(articleText) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            //alert(xhr.responseText);
+            alert(xhr.responseText);
             var response = xhr.responseText;
             var wordList = response.substring(response.lastIndexOf("keyPhrases\":[") + 13, response.lastIndexOf("]}],\"errors"));
             wordList = wordList.replace(/\"/g, "");
             wordList = wordList.replace(/,/g, "+");
             wordList = wordList.replace(/ /g, "+");
-            alert(wordList);
-            getSearchResults(wordList);
+            var countKeyWords = wordList.split("+");
+            //alert(countKeyWords.length);
+            rankKeyWords(countKeyWords, mainText);
+            //getSearchResults(wordList);
+        }
+    }
+}
+
+function rankKeyWords(wordList, mainText) {
+    alert("in here");
+    var ranking = new Array(7);
+    for (i = 0; i < ranking.length; i++) {
+        ranking[i] = ["a" + i, 0];
+    }
+    var currentWord;
+    for (i = 0; i < wordList.length; i++) {
+        currentWord = [wordList[i], 0];
+        for (j = 0; j < mainText.length; j++) {
+            if (currentWord[0] == mainText[j]) {
+                currentWord[1]++;
+            }
+        }
+        var sameWord = false;
+        for (k = 0; k < ranking.length; k++) {
+            if (currentWord[0] == ranking[k][0]) {
+                sameWord = true;
+            }
+            if (currentWord[1] > ranking[k][1] && !sameWord) {
+                if (currentWord[0] == ranking[k][0]) {
+                    alert(currentWord[0] + " same word");
+                    sameWord = true;
+                }
+                else {
+                    var temp = currentWord;
+                    currentWord = ranking[k];
+                    ranking[k] = temp;
+                }
+            }
+        }
+    }
+    var wordQueue = "";
+    for (i = 0; i < ranking.length - 1; i++) {
+        wordQueue = wordQueue.concat(ranking[i][0] + "+");
+    }
+    wordQueue = wordQueue.concat(ranking[ranking.length - 1][0]);
+    translateWords(wordQueue);
+
+
+
+   /**for (i = 0; i < ranking.length; i++) {
+        alert(ranking[i][0] + " one word " + ranking[i][1]);
+    }*/
+}
+
+function translateWords(wordList) {
+    var translateRequest = new XMLHttpRequest();
+    var toTranslate = [{ "Text": wordList }]
+    var payload = JSON.stringify(toTranslate);
+    translateRequest.open("POST", "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=es", true);
+    translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
+    translateRequest.setRequestHeader("Content-Type", "application/json");
+    //translateRequest.setRequestHeader("Content-Length", payload.length);
+    translateRequest.send(payload);
+
+    translateRequest.onreadystatechange = function () {
+        if (translateRequest.readyState == 4) {
+            alert(translateRequest.responseText);
+            var response = translateRequest.responseText;
+            var translatedWords = response.substring(response.lastIndexOf("text\":\"") + 8, response.lastIndexOf("\",\"to"))
+            translatedWords = translatedWords.replace(/ /g, "");
+            getSearchResults(translatedWords);
         }
     }
 }
