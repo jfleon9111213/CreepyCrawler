@@ -1,43 +1,14 @@
 /*
  * Gets all the text found in the body paragraphs of the current HTML file,
  * sends that text to the KeyPhrases Azure API, and then gets
- * relevant reults.
+ * relevant results.
  */ 
 
 chrome.tabs.getSelected(null, function (tab) {
     chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
-        alert(response.data);
         var mainText = response.data.split(" ");
-        alert(mainText[0]);
         getKeyPhrases(response.data, mainText);
     });
-    /*
-    var link = document.createElement('a');
-    link.href = tab.url;
-    if (window.XMLHttpRequest) {
-        var request = new XMLHttpRequest();
-    } else {
-        var request = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    var words = "";
-    request.open("GET", link.href, true);
-    request.send();
-    */
-    /*
-    request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            document.open();
-            document.write(request.responseText);
-            var list = document.getElementsByTagName("P");
-            document.close();
-            var i;
-            for (i = 0; i < list.length; i++) {
-                words = words.concat(list[i].innerText + i + " ");
-            }
-            alert(words);
-            getKeyPhrases(words);
-        }
-    };*/
 });
 
 /**
@@ -55,22 +26,18 @@ function getKeyPhrases(articleText, mainText) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
-            alert(xhr.responseText);
             var response = xhr.responseText;
             var wordList = response.substring(response.lastIndexOf("keyPhrases\":[") + 13, response.lastIndexOf("]}],\"errors"));
             wordList = wordList.replace(/\"/g, "");
             wordList = wordList.replace(/,/g, "+");
             wordList = wordList.replace(/ /g, "+");
             var countKeyWords = wordList.split("+");
-            //alert(countKeyWords.length);
             rankKeyWords(countKeyWords, mainText);
-            //getSearchResults(wordList);
         }
     }
 }
 
 function rankKeyWords(wordList, mainText) {
-    alert("in here");
     var ranking = new Array(7);
     for (i = 0; i < ranking.length; i++) {
         ranking[i] = ["a" + i, 0];
@@ -90,7 +57,6 @@ function rankKeyWords(wordList, mainText) {
             }
             if (currentWord[1] > ranking[k][1] && !sameWord) {
                 if (currentWord[0] == ranking[k][0]) {
-                    alert(currentWord[0] + " same word");
                     sameWord = true;
                 }
                 else {
@@ -107,12 +73,6 @@ function rankKeyWords(wordList, mainText) {
     }
     wordQueue = wordQueue.concat(ranking[ranking.length - 1][0]);
     translateWords(wordQueue);
-
-
-
-   /**for (i = 0; i < ranking.length; i++) {
-        alert(ranking[i][0] + " one word " + ranking[i][1]);
-    }*/
 }
 
 function translateWords(wordList) {
@@ -127,7 +87,6 @@ function translateWords(wordList) {
 
     translateRequest.onreadystatechange = function () {
         if (translateRequest.readyState == 4) {
-            alert(translateRequest.responseText);
             var response = translateRequest.responseText;
             var translatedWords = response.substring(response.lastIndexOf("text\":\"") + 8, response.lastIndexOf("\",\"to"))
             translatedWords = translatedWords.replace(/ /g, "");
@@ -148,17 +107,65 @@ function getSearchResults(wordList) {
 
     searchRequest.onreadystatechange = function () {
         if (searchRequest.readyState == 4) {
-            alert(searchRequest.responseText);
-            var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
 
-            for (i = 0; i < urlList.length; i++) {
-                urlList[i] = urlList[i].replace(/\"/g, "");	//delete all double quotes
-                urlList[i] = urlList[i].replace("url:", ""); //delete "url: " label
-                urlList[i] = urlList[i].replace(/\\\/|\/\\/g, "/");	//replace \/ with /
+        	/* Format results, given in this attribute order:
+        		name, url, isFamilyFriendly, displayUrl, snippet
+        	*/
+            
+            var nameList = searchRequest.responseText.match(/\"name\": \"(.*?)\"/g);
+            var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
+            //var ffList = searchRequest.responseText.match(/\"isFamilyFriendly\": \"(.*?)\"/g);
+            var displayUrlList = searchRequest.responseText.match(/\"displayUrl\": \"(.*?)\"/g);
+            var snippetList = searchRequest.responseText.match(/\"snippet\": \"(.*?)\"/g);
+
+            formatStrings(nameList, "name:");
+            formatStrings(urlList, "url:");
+            formatStrings(displayUrlList, "displayUrl:");
+            formatStrings(snippetList, "snippet:");
+
+            function formatStrings(list, listType){
+            	if(list==null){
+            		alert(list);
+            	}
+				for (i = 0; i < list.length; i++) {
+	                list[i] = list[i].replace(/\"/g, "");	//delete all double quotes
+	                list[i] = list[i].replace(/\\\/|\/\\/g, "/");	//replace \/ with /
+	                list[i] = list[i].replace(listType, "");
+	            }
             }
-            //formatting URLs for printing
-            var urlListString = urlList.toString().replace(/,/g, "\n\n");
-            alert(urlList.length + " suggestions: \n" + urlListString);
+
+            displayAttribute();	//TODO: probably remove this useless function call
+            
+            function displayAttribute(){
+	            for (i = 0; i < nameList.length; i++) {
+	                var node = document.createElement("A");                 // Create an <a> node
+	                node.setAttribute("id", "result_"+i);
+
+	                var urlNode = document.createTextNode(urlList[i]);
+		            node.setAttribute("href", urlNode);
+		            var nameNode = document.createTextNode(nameList[i]);
+		            node.innerHTML = "nameNode";
+
+		            node_snip = document.createElement("P");
+		            var snippetNode = document.createTextNode(snippetList[i]);
+		            node_snip.innerHTML = snippetNode;
+		        }
+            }
+
+            function displayAttributeAll(){
+	            for (i = 0; i < nameList.length; i++) {
+	                
+	                var node = document.createElement("LI");                 // Create a <li> node
+		            var textnode = document.createTextNode(nameList[i]
+		            	+ "\n" + urlList[i]
+		            	+ "\n" + displayUrlList[i]
+		            	+ "\n" + snippetList[i]
+		            	);      // Create a text node
+		            node.appendChild(textnode);                              // Append the text to <li>
+		            document.getElementById("result_list").appendChild(node);     // Append <li> to <ul> with id="myList"
+		        }
+            }
+
 
         }
     }
