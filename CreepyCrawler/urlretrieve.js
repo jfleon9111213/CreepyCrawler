@@ -133,22 +133,30 @@ function getSearchResults(wordList) {
 	                list[i] = list[i].replace(listType, "");
 	            }
             }
-
+            
             displayAttribute();	//TODO: probably remove this useless function call
             
             function displayAttribute(){
 	            for (i = 0; i < nameList.length; i++) {
-	                var node = document.createElement("A");                 // Create an <a> node
-	                node.setAttribute("id", "result_"+i);
+	                var listelem = document.createElement("LI");
+	                
 
-	                var urlNode = document.createTextNode(urlList[i]);
-		            node.setAttribute("href", urlNode);
-		            var nameNode = document.createTextNode(nameList[i]);
-		            node.innerHTML = "nameNode";
+	                var node = document.createElement("A");                 // Create an <a> node
+	                var nodeName = "result_" + i;
+	                node.setAttribute("id", nodeName);
+		            node.setAttribute("href", urlList[i]);
+
+		            //document.getElementById("result_list").appendChild(node);						//add button to HTML
+		            node.innerHTML = nameList[i];
+		            listelem.appendChild(node);
 
 		            node_snip = document.createElement("P");
-		            var snippetNode = document.createTextNode(snippetList[i]);
-		            node_snip.innerHTML = snippetNode;
+		            if(snippetList[i]!=null)
+		            	node_snip.innerHTML = snippetList[i];
+		            else
+		            	node_snip.innerHTML = "No preview available.";
+		            listelem.appendChild(node_snip);
+		            document.getElementById("result_list").appendChild(listelem);
 		        }
             }
 
