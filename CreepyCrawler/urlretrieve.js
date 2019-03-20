@@ -134,7 +134,7 @@ function getSearchResults(wordList) {
 	            }
             }
             
-            displayAttribute();	//TODO: probably remove this useless function call
+            displayAttribute();
             
             function displayAttribute(){
 	            for (i = 0; i < nameList.length; i++) {
@@ -159,22 +159,16 @@ function getSearchResults(wordList) {
 		            document.getElementById("result_list").appendChild(listelem);
 		        }
             }
-
-            function displayAttributeAll(){
-	            for (i = 0; i < nameList.length; i++) {
-	                
-	                var node = document.createElement("LI");                 // Create a <li> node
-		            var textnode = document.createTextNode(nameList[i]
-		            	+ "\n" + urlList[i]
-		            	+ "\n" + displayUrlList[i]
-		            	+ "\n" + snippetList[i]
-		            	);      // Create a text node
-		            node.appendChild(textnode);                              // Append the text to <li>
-		            document.getElementById("result_list").appendChild(node);     // Append <li> to <ul> with id="myList"
-		        }
-            }
-
-
         }
     }
+}
+
+//Handling slider in FILTERS tab
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
 }

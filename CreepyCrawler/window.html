@@ -7,15 +7,36 @@ will be printed out.
 <html>
     <head>
         <title>Window Popup</title>
-        <link href="stylesheet.css" type="text/css" rel="stylesheet" />
+        <link href="windowstyle.css" type="text/css" rel="stylesheet" />
         <script src="urlretrieve.js"></script>
     </head>
     <body>
         <div id="host"></div>
+
+        <div id="filters" class="dropdown">
+          <button class="dropbtn">Filters</button>
+          <div class="dropdown-content" style="left:0;">
+            <a href="#">Language<br>
+              <input type="radio" name="lang" value="en" checked> English<br>
+              <input type="radio" name="lang" value="es"> Spanish<br>
+              <input type="radio" name="lang" value="de"> German<br>
+            </a>
+            <a href="#" class="switch">
+              <input type="checkbox">
+              <span class="slider round">SafeSearch</span>
+            </a>
+            
+            <label class="slidecontainer">Amount of Results
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            </label>
+            <input type="submit" value="Apply Changes">
+          </div>
+        </div>
+
         <div id="results">
           <ul id="result_list"></ul>
         </div>
-        <div id="filters"></div>
+        
     </body>
 
 </html>
