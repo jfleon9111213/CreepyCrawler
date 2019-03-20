@@ -163,12 +163,12 @@ function getSearchResults(wordList) {
     }
 }
 
-//Handling slider in FILTERS tab
+//TODO: not taking in element with correct id's
+//Handling range slider in FILTERS tab
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
+output.innerHTML = slider.value;
 
-// Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-  slider.innerHTML = this.value;
+  output.innerHTML = this.value;
 }
