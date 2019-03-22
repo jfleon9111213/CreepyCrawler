@@ -4,8 +4,8 @@
  * relevant results.
  */ 
 
-var leng = "en";
-doSearch(leng);
+var default_lang = "en";    //set language to english by default
+doSearch(default_lang);
 
 function doSearch(langCode){
     chrome.tabs.getSelected(null, function (tab) {
@@ -74,6 +74,7 @@ function doSearch(langCode){
         var wordQueue = "";
         for (i = 0; i < ranking.length - 1; i++) {
             wordQueue = wordQueue.concat(ranking[i][0] + "+");
+
         }
         wordQueue = wordQueue.concat(ranking[ranking.length - 1][0]);
         translateWords(wordQueue);
@@ -84,6 +85,7 @@ function doSearch(langCode){
         var toTranslate = [{ "Text": wordList }]
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + langCode;
+        alert(transReq_code);
         translateRequest.open("POST", transReq_code, true);
         translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
         translateRequest.setRequestHeader("Content-Type", "application/json");
@@ -106,7 +108,7 @@ function doSearch(langCode){
      */
     function getSearchResults(wordList) {
         var searchRequest = new XMLHttpRequest();
-        searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList, true);
+        searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList/* + "&safeSearch=" + safeToggle*/, true);
         searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
         searchRequest.send();
 
@@ -153,6 +155,7 @@ function doSearch(langCode){
     	                var nodeName = "result_" + i;
     	                node.setAttribute("id", nodeName);
     		            node.setAttribute("href", urlList[i]);
+                        node.setAttribute("target", "_blank");
 
     		            //document.getElementById("result_list").appendChild(node);						//add button to HTML
     		            node.innerHTML = nameList[i];
@@ -188,6 +191,9 @@ function doSearch(langCode){
         });
         es_btn.addEventListener("click", function(){
             langCode = es_btn.value;
+        });
+        fr_btn.addEventListener("click", function(){
+            langCode = fr_btn.value;
         });
 
         //Event listeners/buttons for the filters
