@@ -14,23 +14,22 @@ will be printed out.
         <div id="host"></div>
 
         <div id="filters" class="dropdown">
-          <button class="dropbtn">Filters</button>
+          <button class="btn">Filters</button>
           <div class="dropdown-content" style="left:0;">
-            <a href="#">Language<br>
-              <input type="radio" name="lang" value="en" checked> English<br>
-              <input type="radio" name="lang" value="es"> Spanish<br>
-              <input type="radio" name="lang" value="de"> German<br>
+            <a>Language<br>
+              <input type="radio" id="langPref_en" value="en" checked> English<br>
+              <input type="radio" id="langPref_es" value="es"> Spanish<br>
+              <input type="radio" id="langPref_fr" value="de"> French<br>
             </a>
-            <a href="#" class="switch">
+            <a class="switch">
               <input type="checkbox">
               <span class="slider round">SafeSearch</span>
             </a>
             
-            <label class="slidecontainer">Amount of Results
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                <span id="demo"></span>
-            </label>
-            <input type="submit" value="Apply Changes">
+            <a class="slidecontainer">Amount of Results: <span id="demo"></span>
+                <input type="range" min="1" max="50" value="10" class="slider" id="myRange">
+            </a>
+            <input id="apply_button" class="btn" type="submit" value="Apply Changes">
           </div>
         </div>
 
