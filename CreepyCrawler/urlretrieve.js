@@ -4,10 +4,14 @@
  * relevant results.
  */ 
 
-var default_lang = "en";    //set language to english by default
-doSearch(default_lang);
+//SET DEFAULTS
+var search_count = 10;
+var search_market = "en-US";
+var search_lang = "en";    //set language to english by default
+var search_safe = "Moderate";
+doSearch(search_lang);
 
-function doSearch(langCode){
+function doSearch(search_lang){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
         	if(response!=undefined){
@@ -91,7 +95,7 @@ function doSearch(langCode){
         var translateRequest = new XMLHttpRequest();
         var toTranslate = [{ "Text": wordList }]
         var payload = JSON.stringify(toTranslate);
-        var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + langCode;
+        var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + search_lang;
         translateRequest.open("POST", transReq_code, true);
         translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
         translateRequest.setRequestHeader("Content-Type", "application/json");
@@ -115,7 +119,10 @@ function doSearch(langCode){
     function getSearchResults(wordList) {
         var searchRequest = new XMLHttpRequest();
         wordList = encodeURI(wordList);
-        searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList/* + "&safeSearch=" + safeToggle*/, true);
+        searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList
+        	+ "&count=" + search_count
+        	+ "&mkt="+ search_market
+        	+ "&safeSearch=" + search_safe, true);
         searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
         searchRequest.send();
 
@@ -139,7 +146,7 @@ function doSearch(langCode){
 
                 function formatStrings(list, listType){
                 	if(list==null){
-                		alert(list);
+                		alert(list + "for " + listType);
                 	}
     				for (i = 0; i < list.length; i++) {
     	                list[i] = list[i].replace(/\"/g, "");	//delete all double quotes
@@ -179,28 +186,8 @@ function doSearch(langCode){
                 }
             }
         }
-    	//dropdown handling
-    	/* When the user clicks on the button, 
-    	toggle between hiding and showing the dropdown content */
-    	function myFunction() {
-    	  document.getElementById("myDropdown").classList.toggle("show");
-    	}
-
     	var filters_var = document.getElementById("filters");
 
-    	// Close the dropdown menu if the user clicks outside of it
-    	window.onclick = function(event) {
-    	  if (!event.target.matches('.btn')) {
-    	    var dropdowns = document.getElementsByClassName("dropdown-content");
-    	    var i;
-    	    for (i = 0; i < dropdowns.length; i++) {
-    	      var openDropdown = dropdowns[i];
-    	      if (openDropdown.classList.contains('show')) {
-    	        openDropdown.classList.remove('show');
-    	      }
-    	    }
-    	  }
-    	}
 
         //Handling range slider in FILTERS tab
         var slider = document.getElementById("myRange");
@@ -215,16 +202,25 @@ function doSearch(langCode){
         var en_btn = document.getElementById("langPref_en");
         var es_btn = document.getElementById("langPref_es");
         var fr_btn = document.getElementById("langPref_fr");
+        var zh_btn = document.getElementById("langPref_zh");
         en_btn.addEventListener("click", function(){
-            langCode = en_btn.value;
+            search_lang = en_btn.value;
+            search_market = "en-US";
             filters_var.value = "not_applied";
         });
         es_btn.addEventListener("click", function(){
-            langCode = es_btn.value;
+            search_lang = es_btn.value;
+            search_market = "es-ES";
             filters_var.value = "not_applied";
         });
         fr_btn.addEventListener("click", function(){
-            langCode = fr_btn.value;
+            search_lang = fr_btn.value;
+            search_market = "fr-FR";
+            filters_var.value = "not_applied";
+        });
+        zh_btn.addEventListener("click", function(){
+            search_lang = zh_btn.value;
+            search_market = "zh-CN";
             filters_var.value = "not_applied";
         });
 
@@ -234,7 +230,7 @@ function doSearch(langCode){
         change_notice.addEventListener("click", function(){
             //if(filters_var.value=="not_applied")
             	//change_notice.value = "Apply Changes";
-            	doSearch(langCode);
+            	doSearch(search_lang);
         });
     }
 
