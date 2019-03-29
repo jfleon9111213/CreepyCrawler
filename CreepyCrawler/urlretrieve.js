@@ -10,8 +10,14 @@ doSearch(default_lang);
 function doSearch(langCode){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
-            var mainText = response.data.split(" ");
-            getKeyPhrases(response.data, mainText);
+        	if(response!=undefined){
+	            var mainText = response.data.split(" ");
+	            getKeyPhrases(response.data, mainText);
+	        }
+	        else{
+	        	var res = document.getElementById("results");
+	        	res.innerHTML = "Cannot analyze this page.";
+	        }
         });
     });
 
@@ -70,6 +76,7 @@ function doSearch(langCode){
                     }
                 }
             }
+
         }
         var wordQueue = "";
         for (i = 0; i < ranking.length - 1; i++) {
@@ -85,7 +92,6 @@ function doSearch(langCode){
         var toTranslate = [{ "Text": wordList }]
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + langCode;
-        alert(transReq_code);
         translateRequest.open("POST", transReq_code, true);
         translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
         translateRequest.setRequestHeader("Content-Type", "application/json");
@@ -95,7 +101,7 @@ function doSearch(langCode){
         translateRequest.onreadystatechange = function () {
             if (translateRequest.readyState == 4) {
                 var response = translateRequest.responseText;
-                var translatedWords = response.substring(response.lastIndexOf("text\":\"") + 8, response.lastIndexOf("\",\"to"))
+                var translatedWords = response.substring(response.lastIndexOf("text\":\"") + 8, response.lastIndexOf("\",\"to"));
                 translatedWords = translatedWords.replace(/ /g, "");
                 getSearchResults(translatedWords);
             }
@@ -108,6 +114,7 @@ function doSearch(langCode){
      */
     function getSearchResults(wordList) {
         var searchRequest = new XMLHttpRequest();
+        wordList = encodeURI(wordList);
         searchRequest.open("GET", "https://api.cognitive.microsoft.com/bing/v7.0/search?q=" + wordList/* + "&safeSearch=" + safeToggle*/, true);
         searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
         searchRequest.send();
@@ -137,6 +144,7 @@ function doSearch(langCode){
     				for (i = 0; i < list.length; i++) {
     	                list[i] = list[i].replace(/\"/g, "");	//delete all double quotes
     	                list[i] = list[i].replace(/\\\/|\/\\/g, "/");	//replace \/ with /
+    	                list[i] = list[i].replace(/\\/g, "");	//delete any remaining \
     	                list[i] = list[i].replace(listType, "");
     	            }
                 }
@@ -144,13 +152,13 @@ function doSearch(langCode){
                 displayAttribute();
                 
                 function displayAttribute(){
-                    var reslist = document.getElementById("result_list")
+                    var reslist = document.getElementById("result_list");
                     reslist.innerHTML = "";  //clear current list
 
     	            for (i = 0; i < nameList.length; i++) {
+    	                
     	                var listelem = document.createElement("LI");
     	                
-
     	                var node = document.createElement("A");                 // Create an <a> node
     	                var nodeName = "result_" + i;
     	                node.setAttribute("id", nodeName);
@@ -161,18 +169,39 @@ function doSearch(langCode){
     		            node.innerHTML = nameList[i];
     		            listelem.appendChild(node);
 
-    		            node_snip = document.createElement("P");
-    		            if(snippetList[i]!=null)
+    		            if(snippetList[i]!=null && (snippetList[i].replace(/\s/g, '').length)){	//if preview text is not null NOR blank
+    		            	node_snip = document.createElement("P");
     		            	node_snip.innerHTML = snippetList[i];
-    		            else
-    		            	node_snip.innerHTML = "No preview available.";
-    		            listelem.appendChild(node_snip);
-    		            reslist.appendChild(listelem);
+    		            	listelem.appendChild(node_snip);
+    		            	reslist.appendChild(listelem);
+    		            }
     		        }
                 }
             }
         }
-    
+    	//dropdown handling
+    	/* When the user clicks on the button, 
+    	toggle between hiding and showing the dropdown content */
+    	function myFunction() {
+    	  document.getElementById("myDropdown").classList.toggle("show");
+    	}
+
+    	var filters_var = document.getElementById("filters");
+
+    	// Close the dropdown menu if the user clicks outside of it
+    	window.onclick = function(event) {
+    	  if (!event.target.matches('.btn')) {
+    	    var dropdowns = document.getElementsByClassName("dropdown-content");
+    	    var i;
+    	    for (i = 0; i < dropdowns.length; i++) {
+    	      var openDropdown = dropdowns[i];
+    	      if (openDropdown.classList.contains('show')) {
+    	        openDropdown.classList.remove('show');
+    	      }
+    	    }
+    	  }
+    	}
+
         //Handling range slider in FILTERS tab
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
@@ -181,26 +210,31 @@ function doSearch(langCode){
         slider.oninput = function() {
           output.innerHTML = this.value;
         }
-
+        
         //Handling language radio buttons in FILTERS tab
         var en_btn = document.getElementById("langPref_en");
         var es_btn = document.getElementById("langPref_es");
         var fr_btn = document.getElementById("langPref_fr");
         en_btn.addEventListener("click", function(){
             langCode = en_btn.value;
+            filters_var.value = "not_applied";
         });
         es_btn.addEventListener("click", function(){
             langCode = es_btn.value;
+            filters_var.value = "not_applied";
         });
         fr_btn.addEventListener("click", function(){
             langCode = fr_btn.value;
+            filters_var.value = "not_applied";
         });
 
+        //TODO: configure multiple-change, single instance button.
         //Event listeners/buttons for the filters
         var change_notice = document.getElementById("apply_button");
         change_notice.addEventListener("click", function(){
-            change_notice.value = "Search done";
-            doSearch(langCode);
+            //if(filters_var.value=="not_applied")
+            	//change_notice.value = "Apply Changes";
+            	doSearch(langCode);
         });
     }
 
