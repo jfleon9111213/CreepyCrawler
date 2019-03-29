@@ -5,13 +5,13 @@
  */ 
 
 //SET DEFAULTS
-var search_count = 10;
-var search_market = "en-US";
-var search_lang = "en";    //set language to english by default
-var search_safe = "Moderate";
-doSearch(search_lang);
+var default_count = 10;
+var default_market = "en-US";
+var default_lang = "en";    //set language to english by default
+var default_safe = "Moderate";
+doSearch(default_count, default_market, default_lang, default_safe);
 
-function doSearch(search_lang){
+function doSearch(search_count, search_market, search_lang, search_safe){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
         	if(response!=undefined){
@@ -173,7 +173,10 @@ function doSearch(search_lang){
                         node.setAttribute("target", "_blank");
 
     		            //document.getElementById("result_list").appendChild(node);						//add button to HTML
-    		            node.innerHTML = nameList[i];
+    		            if(nameList[i].replace(/\s/g, '').length)	//if name is not blank
+    		            	node.innerHTML = nameList[i];
+    		            else
+    		            	node.innerHTML = "No Title Available";
     		            listelem.appendChild(node);
 
     		            if(snippetList[i]!=null && (snippetList[i].replace(/\s/g, '').length)){	//if preview text is not null NOR blank
@@ -192,10 +195,11 @@ function doSearch(search_lang){
         //Handling range slider in FILTERS tab
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
-        output.innerHTML = slider.value;
+        output.innerHTML = slider.value;	//initial value set
 
         slider.oninput = function() {
-          output.innerHTML = this.value;
+          output.innerHTML = this.value;	//real-time update of slider value
+          search_count = this.value;
         }
         
         //Handling language radio buttons in FILTERS tab
@@ -230,7 +234,7 @@ function doSearch(search_lang){
         change_notice.addEventListener("click", function(){
             //if(filters_var.value=="not_applied")
             	//change_notice.value = "Apply Changes";
-            	doSearch(search_lang);
+            	doSearch(search_count, search_market, search_lang, search_safe);
         });
     }
 
