@@ -1,11 +1,11 @@
 {
-	"author": "B-Loved Prophet and Foolish Ninja",
-	"manifest_version": 2,
-	"name": "CreepyCrawler Extension",
+	"author": "Jesus and Angela",
+	"manifest_version": 3,
+	"name": "Polyglot",
 	"version": "1.0",
-	"description": "Temp: This extension prints out the current URL",
+	"description": "This extension recommends similar websites in different languages.",
 	"browser_action": {
-		"default_icon": "defaulticon.png",
+		"default_icon": "images/defaulticon.png",
 		"default_popup": "window.html"
 	},
   "permissions": [ "tabs", "<all_urls>" ],

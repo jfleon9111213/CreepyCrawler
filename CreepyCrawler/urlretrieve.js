@@ -8,7 +8,7 @@
 var default_count = 10;
 var default_market = "en-US";
 var default_lang = "en";    //set language to english by default
-var default_safe = "Moderate";
+var default_safe = "Strict";	//strict, moderate, or off. For simplicity, strict or off.
 doSearch(default_count, default_market, default_lang, default_safe);
 
 function doSearch(search_count, search_market, search_lang, search_safe){
@@ -19,7 +19,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 	            getKeyPhrases(response.data, mainText);
 	        }
 	        else{
-	        	var res = document.getElementById("results");
+	        	var res = document.getElementById("result_list");
 	        	res.innerHTML = "Cannot analyze this page.";
 	        }
         });
@@ -135,7 +135,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 
                 var nameList = searchRequest.responseText.match(/\"name\": \"(.*?)\"/g);
                 var urlList = searchRequest.responseText.match(/\"url\": \"(.*?)\"/g);
-                //var ffList = searchRequest.responseText.match(/\"isFamilyFriendly\": \"(.*?)\"/g);
+                var ffList = searchRequest.responseText.match(/\"isFamilyFriendly\": \"(.*?)\"/g);
                 var displayUrlList = searchRequest.responseText.match(/\"displayUrl\": \"(.*?)\"/g);
                 var snippetList = searchRequest.responseText.match(/\"snippet\": \"(.*?)\"/g);
 
@@ -160,37 +160,36 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 
                 function displayAttribute(){
                     var reslist = document.getElementById("result_list");
-                    reslist.innerHTML = "";  //clear current list
+                    reslist.innerHTML = "";  //clear current <ul> list
 
     	            for (i = 0; i < nameList.length; i++) {
     	                
-    	                var listelem = document.createElement("LI");
-    	                
-    	                var node = document.createElement("A");                 // Create an <a> node
-    	                var nodeName = "result_" + i;
-    	                node.setAttribute("id", nodeName);
-    		            node.setAttribute("href", urlList[i]);
-                        node.setAttribute("target", "_blank");
+	    	                var listelem = document.createElement("LI");
+	    	                listelem.setAttribute("class", "result_elem")
+	    	                var node = document.createElement("A");                 // Create an <a> node
+	    	                var nodeName = "result_" + i;
+	    	                node.setAttribute("id", nodeName);
+	    		            node.setAttribute("href", urlList[i]);
+	                        node.setAttribute("target", "_blank");
 
-    		            //document.getElementById("result_list").appendChild(node);						//add button to HTML
-    		            if(nameList[i].replace(/\s/g, '').length)	//if name is not blank
-    		            	node.innerHTML = nameList[i];
-    		            else
-    		            	node.innerHTML = "No Title Available";
-    		            listelem.appendChild(node);
+	    		            if(nameList[i].replace(/\s/g, '').length)	//if name is not blank
+	    		            	node.innerHTML = nameList[i];
+	    		            else
+	    		            	node.innerHTML = "No Title Available";
+	    		            listelem.appendChild(node);
 
-    		            if(snippetList[i]!=null && (snippetList[i].replace(/\s/g, '').length)){	//if preview text is not null NOR blank
-    		            	node_snip = document.createElement("P");
-    		            	node_snip.innerHTML = snippetList[i];
-    		            	listelem.appendChild(node_snip);
-    		            	reslist.appendChild(listelem);
-    		            }
+	    		            if(snippetList[i]!=null && (snippetList[i].replace(/\s/g, '').length)){	//if preview text is not null NOR blank
+	    		            	node_snip = document.createElement("P");
+	    		            	node_snip.innerHTML = snippetList[i];
+	    		            	listelem.appendChild(node_snip);
+	    		            	reslist.appendChild(listelem);
+	    		            }
+	    		        
     		        }
                 }
             }
         }
     	var filters_var = document.getElementById("filters");
-
 
         //Handling range slider in FILTERS tab
         var slider = document.getElementById("myRange");
@@ -202,6 +201,15 @@ function doSearch(search_count, search_market, search_lang, search_safe){
           search_count = this.value;
         }
         
+        //Handling safesearch check box
+        var safe_btn = document.getElementById("safecheck");
+        safe_btn.addEventListener("click", function(){
+        	if(safe_btn.checked==true)
+        		search_safe="Strict";
+        	else
+        		search_safe="Off";
+        });
+
         //Handling language radio buttons in FILTERS tab
         var en_btn = document.getElementById("langPref_en");
         var es_btn = document.getElementById("langPref_es");
@@ -228,12 +236,9 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             filters_var.value = "not_applied";
         });
 
-        //TODO: configure multiple-change, single instance button.
         //Event listeners/buttons for the filters
         var change_notice = document.getElementById("apply_button");
         change_notice.addEventListener("click", function(){
-            //if(filters_var.value=="not_applied")
-            	//change_notice.value = "Apply Changes";
             	doSearch(search_count, search_market, search_lang, search_safe);
         });
     }

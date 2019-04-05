@@ -3,39 +3,44 @@ This file sets up the window popup where the URL
 will be printed out.
 -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Window Popup</title>
-        <link href="windowstyle.css" type="text/css" rel="stylesheet" />
-        <script src="urlretrieve.js"></script>
+        
+        <link href="windowstyle.css" type="text/css" rel="stylesheet"/>
+        <script src="urlretrieve.js" defer></script>
     </head>
     <body>
-        <div id="host"></div>
-
-        <div id="filters" class="dropdown" value="applied">
-          <button class="btn">Filters</button>
-          <div class="dropdown-content" style="left:0;">
-            <a>Language<br>
-              <input type="radio" name = "lang" id="langPref_en" value="en" checked> English<br>
-              <input type="radio" name = "lang" id="langPref_es" value="es"> Spanish<br>
-              <input type="radio" name = "lang" id="langPref_fr" value="fr"> French<br>
-              <input type="radio" name = "lang" id="langPref_zh" value="zh"> Chinese<br>
-            </a>
-            <a class="switch">
-              <input type="checkbox">
-              <span class="slider round">SafeSearch</span>
-            </a>
-            
-            <a class="slidecontainer">Amount of Results: <span id="demo"></span>
-                <input type="range" min="1" max="50" value="10" class="slider" id="myRange">
-            </a>
-            <input id="apply_button" class="btn" type="submit" value="Apply Changes">
-          </div>
+    	<div id="brand">
+        	<h1 id="maintitle" class="float_center">Polyglot</h1>
+        	<img src="images/globeicon.png" alt=globe>
+        	<p id="tagline">A multilingual website suggester</p>
+        </div>
+        <div id="filters" value="applied">
+        	<h2>Filters</h2>
+	        <label>Language<br>
+	          <input type="radio" name = "lang" id="langPref_en" value="en" checked> English<br>
+	          <input type="radio" name = "lang" id="langPref_es" value="es"> Spanish<br>
+	          <input type="radio" name = "lang" id="langPref_fr" value="fr"> French<br>
+	          <input type="radio" name = "lang" id="langPref_zh" value="zh"> Chinese<br>
+	        </label>
+	        <label class="switch">
+	          <input id="safecheck" type="checkbox" checked>
+	          <span class="slider round">SafeSearch</span>
+	        </label>
+	        
+	        <label class="slidecontainer">Amount of Results: <span id="demo"></span>
+	            <input type="range" min="1" max="50" value="10" class="slider" id="myRange">
+	        </label>
+	        <input id="apply_button" class="btn" type="submit" value="Apply Changes">
         </div>
 
         <div id="results">
-          <ul id="result_list"></ul>
+        	<h2 id="resultstitle">Results</h2>
+          	<ul id="result_list">
+          		<div class="loader"></div>
+          	</ul>
         </div>
         
     </body>
