@@ -8,7 +8,6 @@
 /*Extension window*/
 body {
  	width: 357px;
-  	min-height: 357px;
 
   	margin-top: 0px;
   	background-color: var(--main-bg-color);
@@ -50,9 +49,9 @@ label {
 }
 
 #brand{
-	top:10px;
+	
 	width: 100%;
-	height: 8%;
+	height: 10%;
 	display:flex;
 	justify-content: space-around;
 	position: fixed;
@@ -80,6 +79,9 @@ label {
 	position: sticky;
 }
 
+a {
+	font-weight: 400;
+}
 /*Don't display broken/incomplete links*/
 a[href^="undefined"]{
 	display: none;

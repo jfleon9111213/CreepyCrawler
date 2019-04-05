@@ -52,7 +52,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
     }
 
     function rankKeyWords(wordList, mainText) {
-        var ranking = new Array(7);
+        var ranking = new Array(12);
         for (i = 0; i < ranking.length; i++) {
             ranking[i] = ["a" + i, 0];
         }
@@ -161,7 +161,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 function displayAttribute(){
                     var reslist = document.getElementById("result_list");
                     reslist.innerHTML = "";  //clear current <ul> list
-
+                    window.scrollTo(0, 0);
     	            for (i = 0; i < nameList.length; i++) {
     	                
 	    	                var listelem = document.createElement("LI");
@@ -222,7 +222,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         });
         es_btn.addEventListener("click", function(){
             search_lang = es_btn.value;
-            search_market = "es-ES";
+            search_market = "es-MX";
             filters_var.value = "not_applied";
         });
         fr_btn.addEventListener("click", function(){
