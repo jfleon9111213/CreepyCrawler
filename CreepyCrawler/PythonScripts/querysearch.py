@@ -7,7 +7,7 @@ es = Elasticsearch(hosts = [eshost])
 
 #Gets the key phrases and concatenates them together
 query = ''
-phraseLength = 7
+phraseLength = 12
 for i in range(phraseLength):
     query = query + sys.argv[i+1] + ' '
 
