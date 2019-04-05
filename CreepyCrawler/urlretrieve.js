@@ -159,6 +159,8 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 displayAttribute();
                 
                 function displayAttribute(){
+                    /*PREP WINDOW FOR RESULTS DISPLAY*/
+                    document.getElementById("mainwindow").style.height = 0;
                     var reslist = document.getElementById("result_list");
                     reslist.innerHTML = "";  //clear current <ul> list
                     window.scrollTo(0, 0);

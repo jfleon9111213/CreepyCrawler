@@ -8,7 +8,7 @@
 /*Extension window*/
 body {
  	width: 357px;
-
+ 	height: 357px;
   	margin-top: 0px;
   	background-color: var(--main-bg-color);
   	font-weight: 300;
@@ -43,9 +43,8 @@ li:hover {
 
 /* Appearance of filter components*/
 label {
-  color: black;
-  text-decoration: none;
-  display: block;
+	padding-top:5px;
+	display: block;
 }
 
 #brand{
@@ -111,6 +110,7 @@ a[href^="undefined"]{
   margin: var(--main-padding);
 }
 
+/*Size of the actual slider spectrum*/
 #myRange {
 	height: 15px;
 	width: 85%;
