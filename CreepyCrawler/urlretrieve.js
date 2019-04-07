@@ -9,8 +9,8 @@ var default_count = 10;
 var default_market = "en-US";
 var default_lang = "en";    //set language to english by default
 var default_safe = "Strict";	//strict, moderate, or off. For simplicity, strict or off.
-doSearch(default_count, default_market, default_lang, default_safe);
 
+document.addEventListener('DOMContentLoaded', doSearch(default_count, default_market, default_lang, default_safe));
 function doSearch(search_count, search_market, search_lang, search_safe){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
