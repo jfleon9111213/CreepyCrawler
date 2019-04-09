@@ -35,7 +35,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "7d859d1e1f8d46d6817308ac3da35494");
+        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "55be3679b04f474c93a582763e6b5f21");
         xhr.send(myJSON);
 
         xhr.onreadystatechange = function () {
@@ -97,7 +97,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + search_lang;
         translateRequest.open("POST", transReq_code, true);
-        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
+        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "a3f7217e330e4995b2e7ea7df80d5641");
         translateRequest.setRequestHeader("Content-Type", "application/json");
         //translateRequest.setRequestHeader("Content-Length", payload.length);
         translateRequest.send(payload);
@@ -123,7 +123,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         	+ "&count=" + search_count
         	+ "&mkt="+ search_market
         	+ "&safeSearch=" + search_safe, true);
-        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
+        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "2af17dabe5aa4fbc986fd9b8aa7e25b3");
         searchRequest.send();
 
         searchRequest.onreadystatechange = function () {
