@@ -9,8 +9,8 @@ var default_count = 10;
 var default_market = "en-US";
 var default_lang = "en";    //set language to english by default
 var default_safe = "Strict";	//strict, moderate, or off. For simplicity, strict or off.
-doSearch(default_count, default_market, default_lang, default_safe);
 
+document.addEventListener('DOMContentLoaded', doSearch(default_count, default_market, default_lang, default_safe));
 function doSearch(search_count, search_market, search_lang, search_safe){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
@@ -35,7 +35,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "7d859d1e1f8d46d6817308ac3da35494");
+        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "55be3679b04f474c93a582763e6b5f21");
         xhr.send(myJSON);
 
         xhr.onreadystatechange = function () {
@@ -84,11 +84,41 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         }
         var wordQueue = "";
         for (i = 0; i < ranking.length - 1; i++) {
-            wordQueue = wordQueue.concat(ranking[i][0] + "+");
+            //wordQueue = wordQueue.concat(ranking[i][0] + "+");
+            wordQueue = wordQueue.concat(ranking[i][0] + " ");
 
         }
         wordQueue = wordQueue.concat(ranking[ranking.length - 1][0]);
         translateWords(wordQueue);
+        //elasticSearch(wordQueue);
+    }
+
+    function elasticSearch(wordQueue) {
+        var esRequest = new XMLHttpRequest();
+        var reqBody = {
+            "query": {
+                "more_like_this": {
+                    "fields": [
+                        "content",
+                        "category"
+                    ],
+                    "like": "News.",
+                    "min_term_freq": 1,
+                    "max_query_terms": 1
+                }
+            }
+        }
+        var payload = JSON.stringify(reqBody);
+        esRequest.open("GET", "http://elasticsearchpolyglot.eastus.cloudapp.azure.com:9200/classify/_search", true);
+        esRequest.setRequestHeader("Content-Type", "application/json");
+        esRequest.send(payload);
+
+        esRequest.onreadystatechange = function () {
+            if (esRequest.readyState == 4) {
+                var response = esRequest.responseText;
+                alert(response);
+            }
+        }
     }
 
     function translateWords(wordList) {
@@ -97,7 +127,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + search_lang;
         translateRequest.open("POST", transReq_code, true);
-        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "cf63aca23310409995299ac563491807");
+        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "a3f7217e330e4995b2e7ea7df80d5641");
         translateRequest.setRequestHeader("Content-Type", "application/json");
         //translateRequest.setRequestHeader("Content-Length", payload.length);
         translateRequest.send(payload);
@@ -123,7 +153,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         	+ "&count=" + search_count
         	+ "&mkt="+ search_market
         	+ "&safeSearch=" + search_safe, true);
-        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "f84f70e33c9c44dbbb0db4b5f86a0b60");
+        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "2af17dabe5aa4fbc986fd9b8aa7e25b3");
         searchRequest.send();
 
         searchRequest.onreadystatechange = function () {
@@ -159,6 +189,8 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 displayAttribute();
                 
                 function displayAttribute(){
+                    /*PREP WINDOW FOR RESULTS DISPLAY*/
+                    document.getElementById("mainwindow").style.height = 0;
                     var reslist = document.getElementById("result_list");
                     reslist.innerHTML = "";  //clear current <ul> list
                     window.scrollTo(0, 0);

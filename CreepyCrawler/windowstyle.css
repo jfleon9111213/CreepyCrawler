@@ -8,7 +8,7 @@
 /*Extension window*/
 body {
  	width: 357px;
-
+ 	height: 357px;
   	margin-top: 0px;
   	background-color: var(--main-bg-color);
   	font-weight: 300;
@@ -43,13 +43,11 @@ li:hover {
 
 /* Appearance of filter components*/
 label {
-  color: black;
-  text-decoration: none;
-  display: block;
+	padding-top:5px;
+	display: block;
 }
 
 #brand{
-	
 	width: 100%;
 	height: 10%;
 	display:flex;
@@ -72,7 +70,7 @@ label {
 /* RESULTS */
 #results {
 	z-index:-1;
-	top:100px;
+	top:100px; 
 	display: inline-block;
 	width: 70%;
 	float: right;
@@ -111,6 +109,7 @@ a[href^="undefined"]{
   margin: var(--main-padding);
 }
 
+/*Size of the actual slider spectrum*/
 #myRange {
 	height: 15px;
 	width: 85%;
