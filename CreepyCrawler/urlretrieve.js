@@ -20,7 +20,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 	        }
 	        else{
 	        	var res = document.getElementById("result_list");
-	        	res.innerHTML = "Cannot analyze this page.";
+	        	res.innerHTML = "Cannot analyze. Please refresh the page";
 	        }
         });
     });
@@ -84,8 +84,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         }
         var wordQueue = "";
         for (i = 0; i < ranking.length - 1; i++) {
-            //wordQueue = wordQueue.concat(ranking[i][0] + "+");
-            wordQueue = wordQueue.concat(ranking[i][0] + " ");
+            wordQueue = wordQueue.concat(ranking[i][0] + "+");
 
         }
         wordQueue = wordQueue.concat(ranking[ranking.length - 1][0]);

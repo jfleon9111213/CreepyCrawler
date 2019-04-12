@@ -8,6 +8,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, response) {
     if (words.length > 5120) {
         words = words.substring(0, 5119);
     }
-    response({ data: words });
+    response({ data: words});
 });
 
