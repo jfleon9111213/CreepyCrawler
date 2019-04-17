@@ -13,34 +13,36 @@ will be printed out.
     </head>
     <body id="mainwindow">
     	<div id="brand">
-        	<img src="images/globeicon.png" alt=globe>
-        	<h1 id="maintitle" class="float_center">Polyglot</h1>
+        	<img src="images/globeicon2.png" alt=globe>
+        	<h1 id="maintitle" class="float_center">POLYVOX</h1>
         	<p id="tagline">A multilingual website suggester</p>
+        	
         </div>
         <div id="content">
 	        <div id="filters" value="applied">
-	        	<h2 class="btn" id="filtertitle">Filters
+	        	<h2 class="btn" id="filtertitle">
 	        		<img src="images/filtericon.svg" alt=filter>
+	        		Filters
 	        	</h2>
-		        <label>Language<br>
-		          <input type="radio" name = "lang" id="langPref_en" value="en" checked> English<br>
-		          <input type="radio" name = "lang" id="langPref_es" value="es"> Spanish<br>
-		          <input type="radio" name = "lang" id="langPref_fr" value="fr"> French<br>
-		          <input type="radio" name = "lang" id="langPref_zh" value="zh"> Chinese<br>
-		        </label>
-		        <label>
-		          <label><input id="safecheck"  class="switch" type="checkbox" checked></label>
-		          <span>SafeSearch</span>
-		          <div class="tooltip">
-		          	<img src="images/info.png" alt=info></label>
-		            <span id="safeInfo" class="tooltiptext">Display only results with family-friendly content</span>
-		          </div>
-		        </label>
-		        
-		        <label class="slidecontainer">Amount of Results: <span id="demo"></span>
-		            <input type="range" min="1" max="50" value="10" class="slider" id="myRange">
-		        </label>
-		        <input id="apply_button" class="btn" type="submit" value="Apply Changes">
+	        	<div id="filter_parts">
+			        <label>Language<br>
+			          <input type="radio" class="filter_change" name = "lang" id="langPref_en" value="en" checked> English<br>
+			          <input type="radio" class="filter_change" name = "lang" id="langPref_es" value="es"> Spanish<br>
+			          <input type="radio" class="filter_change" name = "lang" id="langPref_fr" value="fr"> French<br>
+			          <input type="radio" class="filter_change" name = "lang" id="langPref_zh" value="zh"> Chinese<br>
+			        </label>
+			        <label>
+			          <label class="switch">
+			          	<input id="safecheck" class="filter_change" type="checkbox" checked>
+			          	<span class="slider"></span>
+			          	SafeSearch
+			          	<div class="tooltip">
+			          		<img src="images/info.png" alt=info></label>
+			          	 	<span id="safeInfo" class="tooltiptext">Display only results with family-friendly content</span>
+			          	</div>
+			          </label>
+			        </label>
+			    </div>
 	        </div>
 
 	        <div id="results">

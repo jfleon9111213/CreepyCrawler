@@ -190,25 +190,64 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 function displayAttribute(){
                     /*PREP WINDOW FOR RESULTS DISPLAY*/
                     document.getElementById("mainwindow").style.height = 0;
-                    var reslist = document.getElementById("result_list");
+                    var reslist = document.getElementById("result_list");       //ul element
                     reslist.innerHTML = "";  //clear current <ul> list
                     window.scrollTo(0, 0);
     	            for (i = 0; i < nameList.length; i++) {
     	                
 	    	                var listelem = document.createElement("LI");
 	    	                listelem.setAttribute("class", "result_elem")
+
+                            var divelem = document.createElement("DIV");
+                            divelem.setAttribute("class", "tooltip");
+                            //ICON
+                            iconRetrieve();
+                            function iconRetrieve(){
+                                var domhold = "";
+                                if(urlList[i]!=undefined){
+                                    if(urlList[i].includes(".com/"))
+                                        domhold = urlList[i].indexOf(".com/");
+                                    if(urlList[i].includes(".org/"))
+                                        domhold = urlList[i].indexOf(".org/");
+                                }
+
+                                if(domhold!=""){
+                                    var iconpath = urlList[i].substr(0, (domhold+5)) + "favicon.ico";
+                                }
+                                else{   //no icon found
+                                    iconpath = "images/file_grey.png";
+                                }
+                                var imgNode = document.createElement("IMG");
+                                imgNode.setAttribute("src", iconpath);
+                                //put icons to left of URL
+                                imgNode.setAttribute("style", "width: 16px; height: 16px; margin: 1px;");
+                                divelem.appendChild(imgNode);
+                            }
+
+                            //URL
 	    	                var node = document.createElement("A");                 // Create an <a> node
 	    	                var nodeName = "result_" + i;
 	    	                node.setAttribute("id", nodeName);
 	    		            node.setAttribute("href", urlList[i]);
 	                        node.setAttribute("target", "_blank");
+                            //node.setAttribute("class", "tooltip");
 
+                            //TITLE (part of URL)
 	    		            if(nameList[i].replace(/\s/g, '').length)	//if name is not blank
 	    		            	node.innerHTML = nameList[i];
 	    		            else
 	    		            	node.innerHTML = "No Title Available";
-	    		            listelem.appendChild(node);
+	    		            divelem.appendChild(node);                   //add link with title of article as text
 
+                            //adding raw URL as tooltip
+                            var urltoolnode = document.createElement("SPAN");
+                            urltoolnode.setAttribute("class", "tooltiptext");
+                            urltoolnode.innerHTML = urlList[i];
+                            divelem.appendChild(urltoolnode);
+
+                            listelem.appendChild(divelem);
+                            
+                            //PREVIEW TEXT
 	    		            if(snippetList[i]!=null && (snippetList[i].replace(/\s/g, '').length)){	//if preview text is not null NOR blank
 	    		            	node_snip = document.createElement("P");
 	    		            	node_snip.innerHTML = snippetList[i];
@@ -222,7 +261,23 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         }
     	var filters_var = document.getElementById("filters");
 
-        //Handling range slider in FILTERS tab
+        //Handling filters dropdown
+        var filters_tl = document.getElementById("filtertitle");
+        filters_tl.addEventListener("click", function(){
+            var filter_kids = document.getElementById("filter_parts");
+            filter_kids.setAttribute("style", "display:block");
+        });
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+          if (!document.getElementById("filters").contains(event.target)) {
+            var dropdowns = document.getElementById("filter_parts");
+            dropdowns.classList.remove('show');
+            dropdowns.setAttribute("style", "display:none");
+            }
+        }
+
+        /*Handling range slider in FILTERS tab
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
         output.innerHTML = slider.value;	//initial value set
@@ -231,7 +286,8 @@ function doSearch(search_count, search_market, search_lang, search_safe){
           output.innerHTML = this.value;	//real-time update of slider value
           search_count = this.value;
         }
-        
+        */
+
         //Handling safesearch check box
         var safe_btn = document.getElementById("safecheck");
         safe_btn.addEventListener("click", function(){
@@ -266,12 +322,12 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             search_market = "zh-CN";
             filters_var.value = "not_applied";
         });
-
-        //Event listeners/buttons for the filters
-        var change_notice = document.getElementById("apply_button");
-        change_notice.addEventListener("click", function(){
-            	doSearch(search_count, search_market, search_lang, search_safe);
-        });
+        
+        var change_notice = document.addEventListener('click', function (event) {
+            if ( event.target.classList.contains('filter_change') ) {
+                doSearch(search_count, search_market, search_lang, search_safe);
+            }
+        }, false);
     }
 
 
