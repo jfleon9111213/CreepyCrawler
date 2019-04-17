@@ -14,7 +14,7 @@ will be printed out.
     <body id="mainwindow">
     	<div id="brand">
         	<img src="images/globeicon2.png" alt=globe>
-        	<h1 id="maintitle" class="float_center">POLYVOX</h1>
+        	<h1 id="maintitle" class="float_center">Polyvox</h1>
         	<p id="tagline">A multilingual website suggester</p>
         	
         </div>
@@ -24,13 +24,7 @@ will be printed out.
 	        		<img src="images/filtericon.svg" alt=filter>
 	        		Filters
 	        	</h2>
-	        	<div id="filter_parts">
-			        <label>Language<br>
-			          <input type="radio" class="filter_change" name = "lang" id="langPref_en" value="en" checked> English<br>
-			          <input type="radio" class="filter_change" name = "lang" id="langPref_es" value="es"> Spanish<br>
-			          <input type="radio" class="filter_change" name = "lang" id="langPref_fr" value="fr"> French<br>
-			          <input type="radio" class="filter_change" name = "lang" id="langPref_zh" value="zh"> Chinese<br>
-			        </label>
+	        	<div id="filter_parts" class="drpdn" value="hidden">
 			        <label>
 			          <label class="switch">
 			          	<input id="safecheck" class="filter_change" type="checkbox" checked>
@@ -42,6 +36,13 @@ will be printed out.
 			          	</div>
 			          </label>
 			        </label>
+			        <p class="btn" id="langbtn">Language</p>
+			        <div id="lang_parts" class="drpdn" value="hidden">
+			        	<label class="filter_change" name="lang" id="langPref_en" value="en"> English</label>
+			        	<label class="filter_change" name="lang" id="langPref_es" value="es"> Spanish</label>
+			        	<label class="filter_change" name="lang" id="langPref_fr" value="fr"> French</label>
+			        	<label class="filter_change" name="lang" id="langPref_zh" value="zh"> Chinese</label>
+			        </div>
 			    </div>
 	        </div>
 

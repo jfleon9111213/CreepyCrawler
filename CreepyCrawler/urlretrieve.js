@@ -175,7 +175,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 
                 function formatStrings(list, listType){
                 	if(list==null){
-                		alert(list + "for " + listType);
+                		alert("Null list " + list + " for " + listType);
                 	}
     				for (i = 0; i < list.length; i++) {
     	                list[i] = list[i].replace(/\"/g, "");	//delete all double quotes
@@ -262,10 +262,13 @@ function doSearch(search_count, search_market, search_lang, search_safe){
     	var filters_var = document.getElementById("filters");
 
         //Handling filters dropdown
-        var filters_tl = document.getElementById("filtertitle");
-        filters_tl.addEventListener("click", function(){
-            var filter_kids = document.getElementById("filter_parts");
-            filter_kids.setAttribute("style", "display:block");
+        var filters_tl = document.getElementById("filtertitle").addEventListener("click", function(){
+            document.getElementById("filter_parts").setAttribute("style", "display:block");
+        });
+
+        //Handling language dropdown
+        var lang_tl = document.getElementById("langbtn").addEventListener("click", function(){
+            document.getElementById("lang_parts").setAttribute("style", "display:block");
         });
 
         // Close the dropdown menu if the user clicks outside of it
@@ -277,17 +280,6 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             }
         }
 
-        /*Handling range slider in FILTERS tab
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("demo");
-        output.innerHTML = slider.value;	//initial value set
-
-        slider.oninput = function() {
-          output.innerHTML = this.value;	//real-time update of slider value
-          search_count = this.value;
-        }
-        */
-
         //Handling safesearch check box
         var safe_btn = document.getElementById("safecheck");
         safe_btn.addEventListener("click", function(){
@@ -297,7 +289,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         		search_safe="Off";
         });
 
-        //Handling language radio buttons in FILTERS tab
+        //Handling language buttons in FILTERS tab
         var en_btn = document.getElementById("langPref_en");
         var es_btn = document.getElementById("langPref_es");
         var fr_btn = document.getElementById("langPref_fr");
@@ -322,7 +314,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             search_market = "zh-CN";
             filters_var.value = "not_applied";
         });
-        
+
         var change_notice = document.addEventListener('click', function (event) {
             if ( event.target.classList.contains('filter_change') ) {
                 doSearch(search_count, search_market, search_lang, search_safe);
