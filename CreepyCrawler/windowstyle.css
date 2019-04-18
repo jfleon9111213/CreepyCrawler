@@ -35,16 +35,11 @@ h1, h2 {
     margin: var(--main-margin);
 }
 
-h2 {
-    width: 50%
-}
-
 /* Appearance of results*/
 ul {
-    float:right;
     width: 357px;
     height: 300px;
-    transform:translateY(80px);
+    
     margin: 0px;
     padding: 0px;
     list-style-type: none;
@@ -70,7 +65,7 @@ li:hover {
 }
 
 p {
-    margin: var(--main-margin) !important;
+    margin: var(--main-margin);
 }
 /* Appearance of filter components*/
 label {
@@ -78,29 +73,8 @@ label {
     display: block;
 }
 
-/* TITLE */
-#brand{
-    width: 100%;
-    display:flex;
-    position: fixed;
-    background-color: var(--main-bg-color);
-}
-
-#maintitle {
-    font-variant: small-caps;
-    letter-spacing: 2px;
-    color: var(--c4);
-}
-
-#tagline {
-    font-style:italic;
-    height:15px;
-    transform: translateY(10px);
-
-}
-
 img[alt~="globe"] {
-    margin: var(--main-margin);
+    margin: 0 var(--main-margin) 0 var(--main-margin);
     width: 30px;
     height: 30px;
 }
@@ -114,21 +88,6 @@ img[alt~="info"]:hover {
     opacity:0.5;
 }
 
-#content{
-    height: 420px;
-}
-/* RESULTS */
-#resultstitle{
-    top:45px;
-    position:fixed;
-}
-
-#results {
-    z-index:1;
-    display: inline-block;
-    position: sticky;
-}
-
 a {
     font-weight: 600;
     font-size: 1em;
@@ -138,31 +97,42 @@ a[href^="undefined"]{
     display: none;
 }
 
-/* FILTER */
-#filters {
-    top:50px;
-    z-index: 2;
-    position: fixed;
-    border-radius: 5px;
-    right:10%;
-
-}
-
-/*all filter children*/
-#filter_parts {
-    box-shadow: 5px 5px var(--c4);
-    border: solid 0.5px var(--c4);
-    left:-50px;
-}
-
-
-#filtertitle {
-    z-index:3;
-    width: 80%;
-    margin: 1px;
-    display:block;
+/* MAIN PORTION, FORMATTING */
+#brand {
     display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
 }
+
+#brandtext>* {
+    margin-top: 0px;
+    margin-bottom: 0px; 
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+}
+
+#lang_title {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+#lang_parts {
+    position: relative;
+    top: 5px;
+}
+#lang_parts *:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+
+
+/* ANIMATIONS, TRANSITIONS, AND OTHER FUN STUFF */
 
 /* safesearch information text */
 .tooltip {
@@ -205,18 +175,8 @@ a[href^="undefined"]{
   opacity: .90;
 }
 
-#lang_parts {
-    position: relative;
-    top: 5px;
-}
-#lang_parts *:hover {
-    cursor: pointer;
-    background-color: lightgrey;
-}
-
 .btn {
   padding: 2px 10px;
-  margin: 10 0 10 0;
   max-width: 100%;
   border: solid 0px;
   border-radius: 5px;
@@ -249,7 +209,7 @@ a[href^="undefined"]{
   animation: spin 2s linear infinite;
   position:fixed;
   left:50%;
-  top:30%;
+  top:50%;
 }
 
 @keyframes spin {
@@ -285,7 +245,7 @@ a[href^="undefined"]{
 }
 .pagination {
     position: absolute;
-    top: 395px;
+    top: 100%;
     right: 60px;
   display: inline-block;
   

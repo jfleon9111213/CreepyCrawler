@@ -259,29 +259,24 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                                 num_pages = nodeClass;  //number of pages == biggest updated batch/page
                                 listelem.setAttribute("class", nodeClass);
 	    		            	reslist.appendChild(listelem);
+                                reslist.setAttribute("value", num_pages);
 	    		            }
 	    		        
     		        }
                 }
             }
         }
-    	var filters_var = document.getElementById("filters");
-
-        //Handling filters dropdown
-        var filters_tl = document.getElementById("filtertitle").addEventListener("click", function(){
-            document.getElementById("filter_parts").setAttribute("style", "display:block");
-        });
 
         //Handling language dropdown
-        var lang_tl = document.getElementById("langbtn").addEventListener("click", function(){
+        var lang_tl = document.getElementById("lang_btn")
+        lang_tl.addEventListener("click", function(){
             document.getElementById("lang_parts").setAttribute("style", "display:block");
         });
 
         // Close the dropdown menu if the user clicks outside of it
         window.onclick = function(event) {
-          if (!document.getElementById("filters").contains(event.target)) {
-            var dropdowns = document.getElementById("filter_parts");
-            dropdowns.classList.remove('show');
+          if (!document.getElementById("langbox").contains(event.target)) {
+            var dropdowns = document.getElementById("lang_parts");
             dropdowns.setAttribute("style", "display:none");
             }
         }
@@ -303,26 +298,26 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         en_btn.addEventListener("click", function(){
             search_lang = "en";
             search_market = "en-US";
-            filters_var.value = "not_applied";
+            
         });
         es_btn.addEventListener("click", function(){
             search_lang = "es";
             search_market = "es-MX";
-            filters_var.value = "not_applied";
+            
         });
         fr_btn.addEventListener("click", function(){
             search_lang = "fr";
             search_market = "fr-FR";
-            filters_var.value = "not_applied";
+            
         });
         zh_btn.addEventListener("click", function(){
             search_lang = "zh";
             search_market = "zh-CN";
-            filters_var.value = "not_applied";
+            
         });
 
         /* PAGINATION */
-        var pages = document.getElementsByClass[0]; //holds div of page numbers
+        var num_pages = document.getElementById("result_list").value;   //num_pages from before
         for(var i = 0; i <= num_pages; i++){
             var val = i+1;
             var batch = document.createElement("A");
@@ -345,6 +340,15 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         /* RECALL SEARCH */
         var change_notice = document.addEventListener('click', function (event) {
             if ( event.target.classList.contains('filter_change') ) {
+                /*PREP WINDOW FOR LOADING DISPLAY*/
+                document.getElementById("mainwindow").style.height = 100;
+                var reslist = document.getElementById("result_list");       //ul element
+                reslist.innerHTML = "";  //clear current <ul> list
+                var loader = document.createElement("DIV");
+                loader.setAttribute("class", "loader");
+                reslist.appendChild(loader);
+                window.scrollTo(0, 0);
+
                 doSearch(search_count, search_market, search_lang, search_safe);
             }
         }, false);
