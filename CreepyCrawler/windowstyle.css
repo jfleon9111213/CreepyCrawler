@@ -2,10 +2,11 @@
 :root {
   --main-bg-color: #ffff;
   --c0: #00a388;    /* globe blue */
-  --c1: #79bd8f;    /* dark globe blue */
-  --c2: #beeb9f;
-  --c3: #ffff9d;
-  --c4: #ff6138; 
+  --c1: #dddd;
+  --c2: #cccc;
+  --c3: #bbbb;
+  --c4: #aaaa;
+
   --main-padding: 5px; 
   --main-margin: 10px; 
   --round: 15px 10px;
@@ -59,12 +60,12 @@ li {
     box-shadow: 5px 5px var(--c4);
     border: solid 0.5px var(--c4);
     border-radius:5px;
-    background-color: var(--c2);
+    background-color: var(--c1);
     transition: background-color 0.5s, border-radius 0.5s;
 }
 
 li:hover {
-    background-color: var(--c3);
+    background-color: white;
     border-radius: 15px;
 }
 
@@ -113,6 +114,9 @@ img[alt~="info"]:hover {
     opacity:0.5;
 }
 
+#content{
+    height: 420px;
+}
 /* RESULTS */
 #resultstitle{
     top:45px;
@@ -126,7 +130,8 @@ img[alt~="info"]:hover {
 }
 
 a {
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 1em;
 }
 /*Don't display broken/incomplete links*/
 a[href^="undefined"]{
@@ -272,4 +277,34 @@ a[href^="undefined"]{
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c1);
   width: 200%;
+}
+
+#rest {
+    display: flex;
+    flex-direction: column;
+}
+.pagination {
+    position: absolute;
+    top: 395px;
+    right: 60px;
+  display: inline-block;
+  
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.5s;
+}
+
+.pagination a.active {
+  background-color: var(--c0);
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: var(--c1);
+  border-radius: 5px;
 }

@@ -134,6 +134,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         translateRequest.onreadystatechange = function () {
             if (translateRequest.readyState == 4) {
                 var response = translateRequest.responseText;
+
                 var translatedWords = response.substring(response.lastIndexOf("text\":\"") + 8, response.lastIndexOf("\",\"to"));
                 translatedWords = translatedWords.replace(/ /g, "");
                 getSearchResults(translatedWords);
@@ -175,7 +176,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 
                 function formatStrings(list, listType){
                 	if(list==null){
-                		alert("Null list " + list + " for " + listType);
+                		//alert("Null list " + list + " for " + listType);
                 	}
     				for (i = 0; i < list.length; i++) {
     	                list[i] = list[i].replace(/\"/g, "");	//delete all double quotes
@@ -187,6 +188,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 
                 displayAttribute();
                 
+                var num_pages = 0;
                 function displayAttribute(){
                     /*PREP WINDOW FOR RESULTS DISPLAY*/
                     document.getElementById("mainwindow").style.height = 0;
@@ -194,7 +196,6 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                     reslist.innerHTML = "";  //clear current <ul> list
                     window.scrollTo(0, 0);
     	            for (i = 0; i < nameList.length; i++) {
-    	                
 	    	                var listelem = document.createElement("LI");
 	    	                listelem.setAttribute("class", "result_elem")
 
@@ -226,8 +227,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 
                             //URL
 	    	                var node = document.createElement("A");                 // Create an <a> node
-	    	                var nodeName = "result_" + i;
-	    	                node.setAttribute("id", nodeName);
+	    	                
 	    		            node.setAttribute("href", urlList[i]);
 	                        node.setAttribute("target", "_blank");
                             //node.setAttribute("class", "tooltip");
@@ -252,6 +252,12 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 	    		            	node_snip = document.createElement("P");
 	    		            	node_snip.innerHTML = snippetList[i];
 	    		            	listelem.appendChild(node_snip);
+
+                                var nodeName = "result_" + i;
+                                listelem.setAttribute("id", nodeName);
+                                var nodeClass = (i - (i%5)) / 5;
+                                num_pages = nodeClass;  //number of pages == biggest updated batch/page
+                                listelem.setAttribute("class", nodeClass);
 	    		            	reslist.appendChild(listelem);
 	    		            }
 	    		        
@@ -295,26 +301,48 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         var fr_btn = document.getElementById("langPref_fr");
         var zh_btn = document.getElementById("langPref_zh");
         en_btn.addEventListener("click", function(){
-            search_lang = en_btn.value;
+            search_lang = "en";
             search_market = "en-US";
             filters_var.value = "not_applied";
         });
         es_btn.addEventListener("click", function(){
-            search_lang = es_btn.value;
+            search_lang = "es";
             search_market = "es-MX";
             filters_var.value = "not_applied";
         });
         fr_btn.addEventListener("click", function(){
-            search_lang = fr_btn.value;
+            search_lang = "fr";
             search_market = "fr-FR";
             filters_var.value = "not_applied";
         });
         zh_btn.addEventListener("click", function(){
-            search_lang = zh_btn.value;
+            search_lang = "zh";
             search_market = "zh-CN";
             filters_var.value = "not_applied";
         });
 
+        /* PAGINATION */
+        var pages = document.getElementsByClass[0]; //holds div of page numbers
+        for(var i = 0; i <= num_pages; i++){
+            var val = i+1;
+            var batch = document.createElement("A");
+            batch.innerHTML = val;
+            if(val==1){
+                batch.setAttribute("class", "active");  //set first element to active element
+            }
+            batch.addEventListener(page_activate(batch));
+        }
+
+        function activate(pagelink){
+            var allresults = document.getElementById("result_list").childNodes;
+            for(var i = 0; i < allresults.length; i++){
+                if(allresults[i].class = pagelink.innerHTML){
+                    alert("YEET");
+                }
+            }
+        }
+
+        /* RECALL SEARCH */
         var change_notice = document.addEventListener('click', function (event) {
             if ( event.target.classList.contains('filter_change') ) {
                 doSearch(search_count, search_market, search_lang, search_safe);
