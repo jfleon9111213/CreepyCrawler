@@ -17,9 +17,9 @@ will be printed out.
 	        	<h1 id="maintitle" class="float_center">Polyvox</h1>
 	        	<p id="tagline">A multilingual website suggester</p>
 			</div>
-			<div id="filters">
-	        	<img class="btn" src="images/filtericon.svg" alt=filter>
-	        	<div id="filter_parts" class="drpdn" value="hidden">
+			<div id="settings">
+				<img id="settings_btn" class="dropbtn btn" src="images/settings_g_24.png" />
+	        	<div id="settings_parts" class="drpdn" value="hidden">
 			        <label>
 			          <label class="switch">
 			          	<input id="safecheck" class="filter_change" type="checkbox" checked>
@@ -36,18 +36,23 @@ will be printed out.
         </div>
 
         <div id="content">
-	        
-
-
         	<div id="langbox">
 	        	<h2 id="lang_title">
-	        		Choose your<label id="lang_btn" class="btn">language</label>
+	        		Choose your<label id="lang_btn" class="dropbtn btn">language</label>
 	        	</h2>
 	        	<div id="lang_parts" class="drpdn" value="hidden">
-	        		<label class="filter_change" name="lang" id="langPref_en" value="en"> English</label>
-	        		<label class="filter_change" name="lang" id="langPref_es" value="es"> Spanish</label>
-	        		<label class="filter_change" name="lang" id="langPref_fr" value="fr"> French</label>
-	        		<label class="filter_change" name="lang" id="langPref_zh" value="zh"> Chinese</label>
+	        		<label class="lang_change" id="langPref_en" value="en">
+	        			<img src="images/usa.png" class="flagpic" alt="usa flag">
+	        			English</label>
+	        		<label class="lang_change" id="langPref_es" value="es">
+	        			<img src="images/mexico.png" class="flagpic" alt="mexico flag">
+	        			Spanish</label>
+	        		<label class="lang_change" id="langPref_fr" value="fr">
+	        			<img src="images/france.png" class="flagpic" alt="france flag">
+	        			French</label>
+	        		<label class="lang_change" id="langPref_zh" value="zh">
+	        			<img src="images/china.png" class="flagpic" alt="china flag">
+	        			Chinese</label>
 	        	</div>
         	</div>
 
@@ -86,10 +91,10 @@ will be printed out.
 			        </label>
 			        <p class="btn" id="langbtn">Choose your Language</p>
 			        <div id="lang_parts" class="drpdn" value="hidden">
-			        	<label class="filter_change" name="lang" id="langPref_en" value="en"> English</label>
-			        	<label class="filter_change" name="lang" id="langPref_es" value="es"> Spanish</label>
-			        	<label class="filter_change" name="lang" id="langPref_fr" value="fr"> French</label>
-			        	<label class="filter_change" name="lang" id="langPref_zh" value="zh"> Chinese</label>
+			        	<label class="filter_change" id="langPref_en" value="en"> English</label>
+			        	<label class="filter_change" id="langPref_es" value="es"> Spanish</label>
+			        	<label class="filter_change" id="langPref_fr" value="fr"> French</label>
+			        	<label class="filter_change" id="langPref_zh" value="zh"> Chinese</label>
 			        </div>
 			    </div>
 	        </div> 

@@ -52,16 +52,18 @@ ul {
 li {
     margin: var(--main-margin);
     padding: var(--main-padding);
-    box-shadow: 5px 5px var(--c4);
+    box-shadow: 2px 2px var(--c4);
     border: solid 0.5px var(--c4);
     border-radius:5px;
     background-color: var(--c1);
-    transition: background-color 0.5s, border-radius 0.5s;
+    transition: background-color 0.5s, border-radius 0.5s, border 0.5s, box-shadow 0.5s;
 }
 
 li:hover {
     background-color: white;
     border-radius: 15px;
+    border: solid 0.5px var(--c1);
+    box-shadow: 2px 2px var(--c1);
 }
 
 p {
@@ -75,8 +77,8 @@ label {
 
 img[alt~="globe"] {
     margin: 0 var(--main-margin) 0 var(--main-margin);
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
 }
 
 img[alt~="info"] {
@@ -110,21 +112,38 @@ a[href^="undefined"]{
     margin-bottom: 0px; 
 }
 
+#settings_parts {
+    right: 20px;
+}
+
 #content {
     display: flex;
     flex-direction: column;
 }
 
+.flagpic {
+    width: 15%;
+    height: 15%;
+}
 #lang_title {
-    width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: row;
 }
 
+#lang_title>* {
+    margin:0px 5px 0px 5px;
+}
 #lang_parts {
     position: relative;
     top: 5px;
+}
+
+#lang_parts * {
+    display: inline-block;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+
 }
 #lang_parts *:hover {
     cursor: pointer;
@@ -166,8 +185,8 @@ a[href^="undefined"]{
 #safeInfo {
   width: 80px;
   height: 65px;
-  bottom: 110%;
-  left: -20px;
+  bottom: 120%;
+  left: -40px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -180,23 +199,28 @@ a[href^="undefined"]{
   max-width: 100%;
   border: solid 0px;
   border-radius: 5px;
-  background-color: var(--c4);
+  background-color: var(--c1);
   cursor: pointer;
   transition: background 0.5s, color 0.5s, border-radius 0.5s;
 }
 
 .btn:hover, .btn:focus{
-    background-color: var(--c0);
+    background-color: white;
+    color: var(--c0);
     border-radius: 10px;
 }
 
-.drpdn {
+.drpdn{
     display: none;
     position:absolute;
     margin: var(--main-margin);
     padding: var(--main-padding);
-    border-radius: 5%;
-    background-color: var(--main-bg-color);
+    border-radius: 5px;
+    background-color: var(--c1);
+}
+
+.show {
+    display: block;
 }
 
 /*LOADING WHEEL*/

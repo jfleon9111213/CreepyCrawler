@@ -267,18 +267,36 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             }
         }
 
-        //Handling language dropdown
-        var lang_tl = document.getElementById("lang_btn")
-        lang_tl.addEventListener("click", function(){
-            document.getElementById("lang_parts").setAttribute("style", "display:block");
+        //Handling dropdowns (settings and language)
+        var settings_btn = document.getElementById("settings_btn");
+        settings_btn.addEventListener("click", function dropfunction() {
+            document.getElementById("settings_parts").classList.toggle("show");
         });
 
-        // Close the dropdown menu if the user clicks outside of it
+        var lang_btn = document.getElementById("lang_btn");
+        lang_btn.addEventListener("click", function dropfunction() {
+            document.getElementById("lang_parts").classList.toggle("show");
+        });
+
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function dropfunction(btn) {
+            alert("why");
+          btn.classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
         window.onclick = function(event) {
-          if (!document.getElementById("langbox").contains(event.target)) {
-            var dropdowns = document.getElementById("lang_parts");
-            dropdowns.setAttribute("style", "display:none");
+          if (!event.target.matches('.dropbtn')) {  //if not clicking on a dropdown
+            var dropdowns = document.getElementsByClassName("drpdn");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
             }
+          }
         }
 
         //Handling safesearch check box
