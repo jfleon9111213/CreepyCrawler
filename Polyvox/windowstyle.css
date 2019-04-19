@@ -191,8 +191,13 @@ a[href^="undefined"]{
 #safeInfo {
   width: 80px;
   height: 65px;
+<<<<<<< HEAD:Polyvox/windowstyle.css
   left: -80px;
   bottom: -80px;
+=======
+  bottom: 120%;
+  left: -40px;
+>>>>>>> 8317797c1f9b62dc61d3acef3d47224c716abe61:Polyvox/windowstyle.css
 }
 
 .tooltip:hover .tooltiptext {
