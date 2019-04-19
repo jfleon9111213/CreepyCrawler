@@ -200,7 +200,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
 	    	                listelem.setAttribute("class", "result_elem")
 
                             var divelem = document.createElement("DIV");
-                            divelem.setAttribute("class", "tooltip");
+                            divelem.setAttribute("class", "tooltip result_header");
                             //ICON
                             iconRetrieve();
                             function iconRetrieve(){
@@ -221,7 +221,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                                 var imgNode = document.createElement("IMG");
                                 imgNode.setAttribute("src", iconpath);
                                 //put icons to left of URL
-                                imgNode.setAttribute("style", "width: 16px; height: 16px; margin: 1px;");
+                                imgNode.setAttribute("style", "width: 16px; height: 16px; margin: 2px;");
                                 divelem.appendChild(imgNode);
                             }
 
@@ -267,18 +267,29 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             }
         }
 
-        //Handling language dropdown
-        var lang_tl = document.getElementById("lang_btn")
-        lang_tl.addEventListener("click", function(){
-            document.getElementById("lang_parts").setAttribute("style", "display:block");
+        //Handling dropdowns (settings and language)
+        var settings_btn = document.getElementById("settings_btn");
+        settings_btn.addEventListener("click", function() {
+            document.getElementById("settings_parts").classList.add("show");
         });
 
-        // Close the dropdown menu if the user clicks outside of it
+        var lang_btn = document.getElementById("lang_btn");
+        lang_btn.addEventListener("click", function() {
+            document.getElementById("lang_parts").classList.add("show");
+        });
+
+        // Close the dropdown if the user clicks outside of it
         window.onclick = function(event) {
-          if (!document.getElementById("langbox").contains(event.target)) {
-            var dropdowns = document.getElementById("lang_parts");
-            dropdowns.setAttribute("style", "display:none");
+          if (!event.target.matches('.dropbtn')) {  //if not clicking on a dropdown
+            var dropdowns = document.getElementsByClassName("drpdn");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
             }
+          }
         }
 
         //Handling safesearch check box
@@ -332,7 +343,6 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             var allresults = document.getElementById("result_list").childNodes;
             for(var i = 0; i < allresults.length; i++){
                 if(allresults[i].class = pagelink.innerHTML){
-                    alert("YEET");
                 }
             }
         }
