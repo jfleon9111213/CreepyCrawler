@@ -1,0 +1,18 @@
+{
+	"author": "Jesus and Angela",
+	"manifest_version": 3,
+	"name": "Polyvox",
+	"version": "1.0",
+	"description": "This extension recommends similar websites in different languages.",
+	"browser_action": {
+		"default_icon": "images/globeicon2.png",
+		"default_popup": "window.html"
+	},
+  "permissions": [ "tabs", "<all_urls>" ],
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*" ],
+      "js": [ "contentScript.js" ]
+    }
+  ]
+}
