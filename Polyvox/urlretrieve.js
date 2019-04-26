@@ -3,9 +3,11 @@ var default_count = 10;
 var default_market = "en-US";
 var default_lang = "en";    //set language to english by default
 var default_safe = "Strict";	//strict, moderate, or off. For simplicity, strict or off.
+var default_transl_en = false;   //translate results previews
 
-document.addEventListener('DOMContentLoaded', doSearch(default_count, default_market, default_lang, default_safe));
-function doSearch(search_count, search_market, search_lang, search_safe){
+document.addEventListener('DOMContentLoaded', doSearch(default_count, default_market, default_lang, default_safe, default_transl_en));
+
+function doSearch(search_count, search_market, search_lang, search_safe, transl_en){
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
         	if(response!=undefined){
@@ -146,15 +148,18 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 formatStrings(displayUrlList, "displayUrl:");
                 formatStrings(snippetList, "snippet:");
 
-                for (i = 0; i < nameList.length; i++) {
-                    nameList[i] = nameList[i] + " |";
-                }
+                if(transl_en==true){
+                    for (i = 0; i < nameList.length; i++) {     //circumvent translation calls
+                        nameList[i] = nameList[i] + " |";
+                    }
 
-                for (i = 0; i < snippetList.length; i++) {
-                    snippetList[i] = snippetList[i] + " |";
-                }
+                    for (i = 0; i < snippetList.length; i++) {
+                        snippetList[i] = snippetList[i] + " |";
+                    }
 
-                translateTitles(nameList, snippetList, urlList, displayUrlList);
+                
+                    translateTitles(nameList, snippetList, urlList, displayUrlList);
+                }
 
                 function formatStrings(list, listType) {
                     if (list == null) {
@@ -167,6 +172,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                         list[i] = list[i].replace(listType, "");
                     }
                 }
+                displayInfo(nameList, snippetList, urlList, displayUrlList);
             }
         }        
     }
@@ -206,7 +212,6 @@ function doSearch(search_count, search_market, search_lang, search_safe){
             }
         }
     }
-
     /**
      * Translates the snippets (snippetList) of the suggestions back into English.
      * Once again, the other parameters are passed for future reference/usage.
@@ -251,7 +256,6 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         displayAttribute();
 
         var num_pages = 0;
-
         function displayAttribute() {
             /*PREP WINDOW FOR RESULTS DISPLAY*/
             document.getElementById("mainwindow").style.height = 0;
@@ -354,6 +358,15 @@ function doSearch(search_count, search_market, search_lang, search_safe){
         }
 
         //Handling safesearch check box
+        var ent_btn = document.getElementById("engtransl");
+        ent_btn.addEventListener("click", function () {
+            if (ent_btn.checked == true)
+                transl_en = true;
+            else
+                transl_en = false;
+        });
+
+        //Handling safesearch check box
         var safe_btn = document.getElementById("safecheck");
         safe_btn.addEventListener("click", function () {
             if (safe_btn.checked == true)
@@ -420,7 +433,7 @@ function doSearch(search_count, search_market, search_lang, search_safe){
                 reslist.appendChild(loader);
                 window.scrollTo(0, 0);
 
-                doSearch(search_count, search_market, search_lang, search_safe);
+                doSearch(search_count, search_market, search_lang, search_safe, transl_en);
             }
         }, false);
     }
