@@ -11,7 +11,8 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
     chrome.tabs.getSelected(null, function (tab) {
         chrome.tabs.sendMessage(tab.id, { method: "getText" }, function (response) {
         	if(response!=undefined){
-	            var mainText = response.data.split(" ");
+                var mainText = response.data.split(" ");
+                console.log("hey");
 	            getKeyPhrases(response.data, mainText);
 	        }
 	        else{
@@ -31,7 +32,7 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "55be3679b04f474c93a582763e6b5f21");
+        xhr.setRequestHeader("Ocp-Apim-Subscription-Key", "d9a4cf9de60348b98592af0e5eefa922");
         xhr.send(myJSON);
 
         xhr.onreadystatechange = function () {
@@ -102,7 +103,7 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=" + search_lang;
         translateRequest.open("POST", transReq_code, true);
-        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "a3f7217e330e4995b2e7ea7df80d5641");
+        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "4ec793c946c24e91a80d8813f3665815");
         translateRequest.setRequestHeader("Content-Type", "application/json");
         translateRequest.send(payload);
 
@@ -127,7 +128,7 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
         	+ "&count=" + search_count
         	+ "&mkt="+ search_market
         	+ "&safeSearch=" + search_safe, true);
-        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "2af17dabe5aa4fbc986fd9b8aa7e25b3");
+        searchRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "db6792e6cc414861ac44943d4129cc60");
         searchRequest.send();
 
         searchRequest.onreadystatechange = function () {
@@ -187,7 +188,7 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en";
         translateRequest.open("POST", transReq_code, true);
-        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "a3f7217e330e4995b2e7ea7df80d5641");
+        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "4ec793c946c24e91a80d8813f3665815");
         translateRequest.setRequestHeader("Content-Type", "application/json");
         translateRequest.send(payload);
 
@@ -222,7 +223,7 @@ function doSearch(search_count, search_market, search_lang, search_safe, transl_
         var payload = JSON.stringify(toTranslate);
         var transReq_code = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en";
         translateRequest.open("POST", transReq_code, true);
-        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "a3f7217e330e4995b2e7ea7df80d5641");
+        translateRequest.setRequestHeader("Ocp-Apim-Subscription-Key", "4ec793c946c24e91a80d8813f3665815");
         translateRequest.setRequestHeader("Content-Type", "application/json");
         translateRequest.send(payload);
 
