@@ -1,0 +1,173 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+
+
+    <!-- The crowd-classifier element will create a tool for the Worker to select the
+           correct answer to your question -->
+<crowd-form answer-format="flatten-objects">
+<table>
+    <tbody>
+        <tr>
+            <td style="vertical-align:top;">
+                <div>
+                    <h1>Step 1:</h1>
+                    <h3>Read the Article</h3>
+                    <div style="overflow: scroll;height: 1300px;">
+                        <div class="search well" style="width: 500px;">
+                            <div class="text-center">
+                                <img style="width:500px" src=${article}>
+                            </div>
+                        <br/>
+                        <hr/>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td/>
+            <td style="vertical-align:top;">
+                
+                <div class="span4">
+                    <h1 class="text-center">Step 2:</h1>
+                    <h3 class="text-center">Review recommended news article and rate them</h3>
+                    <br/>
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title1}</b>
+                        <br/>
+                        ${suggestion1}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="firstSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+                <div class="span4">
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title2}</b> 
+                        <br/>
+                        ${suggestion2}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="secondSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+                <div class="span4">
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title3}</b>
+                        <br/>
+                        ${suggestion3}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="thirdSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+                <div class="span4">
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title4}</b>
+                        <br/>
+                        ${suggestion4}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="fourthSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+                <div class="span4">
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title5}</b>
+                        <br/>
+                        ${suggestion5}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="fifthSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+                <div class="span4">
+                    <div class="search well" style="width: 500px;"> 
+                        <b>${title6}</b>
+                        <br/>
+                        ${suggestion6}
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr style="outline: 2px solid grey">
+                                    <td>Not Relevant</td>
+                                        <td>
+                                            <crowd-slider name="sixthSuggestion" min="1" max="5" step="1" pin="true" required></crowd-slider> 
+                                        </td>
+                                    <td>Very Relevant</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                </div>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+</crowd-form>

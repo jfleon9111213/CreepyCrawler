@@ -1,0 +1,85 @@
+
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+
+  <crowd-instructions link-text="View instructions" link-type="button">
+    <short-summary>
+      <p>Provide accurate answers to the demographics survey to the best of your ability. It is okay to estimate.</p>
+    </short-summary>
+  </crowd-instructions>
+  
+  <div>
+      <p>What is your first language?</p>
+     <crowd-radio-group>
+        <crowd-radio-button name="eng" value="english">English</crowd-radio-button>
+        <crowd-radio-button name="span" value="spanish">Spanish</crowd-radio-button>
+        <crowd-radio-button name="both" value="both">Both</crowd-radio-button>
+    </crowd-radio-group>
+  </div>
+
+    <div>
+        <p>On a scale of 1-5, how proficient are you in English?</p>
+        <crowd-slider name="engProf" min="1" max="5" step="1" pin="true" required></crowd-slider>
+    </div>
+
+    <div>
+        <p>On a scale of 1-5, how proficient are you in Spanish?</p>
+        <crowd-slider name="spanProf" min="1" max="5" step="1" pin="true" required></crowd-slider>
+    </div>
+    
+    <div>
+        <p>What is your country of origin?</p>
+        <crowd-input name="countryOrigin" placeholder="example: United States" required></crowd-input>
+    </div>
+    
+    <div>
+        <p>What is your age?</p>
+        <crowd-input name="age" placeholder="example: 21" required></crowd-input>
+    </div>
+    
+    <div>
+        <p>How many years of experience with recommender (e.g. Amazon.com’s “Customers Also Bought”) do you have?</p>
+        <crowd-input name="recommenderExperience" placeholder="example: 4" required></crowd-input>
+    </div>
+</crowd-form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+( • )( • )?(????)
