@@ -44,42 +44,7 @@
     </div>
     
     <div>
-        <p>How many years of experience with recommender (e.g. Amazon.com’s “Customers Also Bought”) do you have?</p>
+        <p>How many years of experience with recommender (e.g. Amazon.comâ€™s â€œCustomers Also Boughtâ€) do you have?</p>
         <crowd-input name="recommenderExperience" placeholder="example: 4" required></crowd-input>
     </div>
 </crowd-form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-( • )( • )?(????)
